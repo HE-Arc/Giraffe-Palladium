@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 /*
 
@@ -23,11 +24,23 @@ Route::get('/signout', [UserController::class, 'disconnect']);
 class UserController extends Controller
 {
     /**
-     * Display the user account page.
+     * Display a list of all users.
      */
     public function index()
     {
-        return view('account');
+        # Create a new user (TEMPORARY CODE)
+        $user = new User();
+        $user->name = 'John Doe';
+        $user->email = 'hello@hello';
+        $user->password = 'hello';
+        $user->tag = 1357;
+        $user->information = 'Hello World!';
+        $user->save();
+
+        # Get all users
+        $users = User::all();
+
+        return view('account')->with('users', $users);
     }
 
     /**
