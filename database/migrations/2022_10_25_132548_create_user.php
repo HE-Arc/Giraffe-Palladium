@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name')->max(255);
             $table->string('email')->max(255)->unique();
             $table->string('password')->max(255);
-            $table->string('password_salt')->max(255);
             $table->integer('tag');
             $table->string('information')->max(255)->nullable()->default(null);
             $table->unique(['name', 'tag']);
