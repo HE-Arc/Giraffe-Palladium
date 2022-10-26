@@ -1,0 +1,70 @@
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    /* Use commun font stack */
+    font: 1rem/1.25 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: black;
+    background: #CCC;
+}
+
+header {
+    color: white;
+    background: #3060A0;
+}
+
+main {
+    flex: 1;
+    margin: 2rem;
+    padding: 1rem;
+    background: white;
+    border: 1px solid #BBB;
+}
+
+footer {
+    padding: 1rem;
+    color: white;
+    background: #3060A0;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li {
+    display: flex;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    color: white;
+    text-decoration: none;
+}
+nav a:hover {
+    background: #244878;
+}
+nav a:active,
+nav a:focus {
+    background: #183050;
+}
+
+h1:first-child {
+    margin-top: 0;
+}
