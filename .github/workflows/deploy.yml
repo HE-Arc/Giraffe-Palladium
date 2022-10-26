@@ -1,5 +1,4 @@
-name: deployer
-run-name: Deploy
+name: Deploy in dev env
 
 on:
   push:
