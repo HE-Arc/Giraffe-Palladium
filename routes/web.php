@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 //use App\Http\Controllers\AboutController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,16 +26,18 @@ Route::get('/index', [IndexController::class, 'index']);
 
 //Route::get('/about', [AboutController::class, 'about']);
 
-// UserController
+// AccountController
 
-Route::get('/account', [UserController::class, 'index']);
-Route::put('/account', [UserController::class, 'update']);
-Route::delete('/account', [UserController::class, 'delete']);
+Route::get('/account', [AccountController::class, 'index']);
+Route::put('/account', [AccountController::class, 'update']);
+Route::get('/account/edit', [AccountController::class, 'edit']);
+Route::get('/account/{id}', [AccountController::class, 'show']);
+Route::delete('/account', [AccountController::class, 'delete']);
 
-Route::get('/signin', [UserController::class, 'formConnection']);
-Route::post('/signin', [UserController::class, 'connect']);
+// AuthController
 
-Route::get('/signup', [UserController::class, 'formCreation']);
-Route::post('/signup', [UserController::class, 'create']);
-
-Route::get('/signout', [UserController::class, 'disconnect']);
+Route::get('/signin', [AuthController::class, 'formConnection']);
+Route::post('/signin', [AuthController::class, 'connect']);
+Route::get('/signup', [AuthController::class, 'formCreation']);
+Route::post('/signup', [AuthController::class, 'create']);
+Route::get('/signout', [AuthController::class, 'disconnect']);

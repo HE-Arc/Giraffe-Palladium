@@ -27,7 +27,7 @@ header {
 main {
     flex: 1;
     margin: 2rem;
-    padding: 1rem;
+    padding: 1.5rem;
     background: white;
     border: 1px solid #BBB;
 }
@@ -41,6 +41,7 @@ footer {
 nav ul {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -65,6 +66,16 @@ nav a:focus {
     background: #183050;
 }
 
-h1:first-child {
+h1:first-child, h2:first-child, p:first-child {
     margin-top: 0;
+}
+h1:last-child, h2:last-child, p:last-child {
+    margin-bottom: 0;
+}
+
+.msg-error {
+    padding: .5rem;
+    color: white;
+    background: darkred;
+    border-radius: .25rem;
 }
