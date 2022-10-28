@@ -1,14 +1,10 @@
 @extends('layout')
 
+@section('title')
+    Créer un compte
+@endsection
+
 @section('content')
-    <h1>Création de compte</h1>
-    @if($error)
-        @if($error == 'some_fields_required')
-            <p class="msg-error">L'email et le nom d'utilisateur sont requis.</p>
-        @elseif($error == 'email_already_exists')
-            <p class="msg-error">Cette adresse email est déjà utilisée.</p>
-        @endif
-    @endif
     <form action="/signup" method="post">
         @csrf
         <div class="form-group">
@@ -28,4 +24,5 @@
             <textarea id="description" name="description"></textarea>
         </div>
         <button type="submit">Créer mon compte</button>
+    </form>
 @endsection

@@ -1,13 +1,12 @@
 @extends('layout')
 
+@section('title')
+    Profil utilisateur
+@endsection
+
 @section('content')
-    <h1>Profile utilisateur</h1>
-    @if($error)
-        @if($error == 'invalid_credentials')
-            <p class="msg-error">Les identifiants sont invalides.</p>
-        @endif
-    @endif
-    <form action="/account" method="post">
+    @php($user = session('user'))
+    <form action="/users/{{ $user->id }}" method="post">
         {{ method_field('PUT') }}
         @csrf
         <div class="form-group">

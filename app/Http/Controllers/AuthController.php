@@ -10,25 +10,15 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     /**
-     * Display a list of all users.
-     */
-    public function index()
-    {
-        $users = User::all();
-        return view('account-edit')->with('users', $users);
-    }
-
-    /**
      * Display the user connection form.
      */
     public function formConnection()
     {
         $error = session('signin-error');
-        session()->forget('signin-error');
         if (session('user')) {
             return redirect('/');
         }
-        return view('signin')->with('error', $error);
+        return view('signin');
     }
 
     /**
@@ -36,19 +26,29 @@ class AuthController extends Controller
      */
     public function connect()
     {
+        try {
+            $this->validate(request(), [
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+        }
+        catch (ValidationException $e) {
+            return redirect('/signin')->with('error', 'Champs invalides');
+        }
+
         # Check if the email and password are correct
         $user = User::where('email', request('email'))->first();
         if ($user) {
             if (password_verify(request('password'), $user->password)) {
                 # The user is connected
                 session(['user' => $user]);
-                return redirect('/account');
+                return redirect('/users/' . $user->id);
             }
         }
 
         # If the user is not connected
-        session(['signin-error' => 'invalid_credentials']);
-        return redirect('/signin');
+        //session(['signin-error' => 'invalid_credentials']);
+        return redirect('/signin')->with('error', 'Identifiants invalides');
     }
 
     /**
@@ -57,11 +57,10 @@ class AuthController extends Controller
     public function formCreation()
     {
         $error = session('signup-error');
-        session()->forget('signup-error');
         if (session('user')) {
             return redirect('/');
         }
-        return view('signup')->with('error', $error);
+        return view('signup');
     }
 
     /**
@@ -81,17 +80,15 @@ class AuthController extends Controller
 
             # Connect the user
             session(['user' => $user]);
-            return redirect('/');
+            return redirect('/')->with('success', 'Compte créé avec succès');
         }
         catch (QueryException $e)
         {
-            session(['signup-error' => 'email_already_exists']);
-            return redirect('/signup');
+            return redirect('/signup')->with('error', 'Email déjà utilisé');
         }
         catch (ValidationException $e)
         {
-            session(['signup-error' => 'some_fields_required']);
-            return redirect('/signup');
+            return redirect('/signup')->with('error', 'Champs invalides');
         }
     }
 

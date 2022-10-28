@@ -9,6 +9,7 @@ html {
 body {
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-height: 100%;
     margin: 0;
     padding: 0;
@@ -20,19 +21,27 @@ body {
 }
 
 header {
+    width: 100%;
     color: white;
     background: #3060A0;
 }
 
-main {
+.container {
     flex: 1;
-    margin: 2rem;
+    width: 100%;
+    padding: 2rem;
+}
+
+main {
+    max-width: 56rem;
+    margin: 0 auto;
     padding: 1.5rem;
     background: white;
     border: 1px solid #BBB;
 }
 
 footer {
+    width: 100%;
     padding: 1rem;
     color: white;
     background: #3060A0;
@@ -73,9 +82,24 @@ h1:last-child, h2:last-child, p:last-child {
     margin-bottom: 0;
 }
 
-.msg-error {
+.msgbox {
     padding: .5rem;
     color: white;
-    background: darkred;
+    background: #333;
     border-radius: .25rem;
+}
+.msgbox.msg-success {
+    background: darkgreen;
+}
+.msgbox.msg-error {
+    background: darkred;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
 }

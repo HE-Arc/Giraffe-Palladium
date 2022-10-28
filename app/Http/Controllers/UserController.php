@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 
-class AccountController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a list of all users.
@@ -15,7 +15,7 @@ class AccountController extends Controller
     public function index()
     {
         $users = User::orderBy('name')->get();
-        return view('account-list')->with('users', $users);
+        return view('user-list')->with('users', $users);
     }
 
     /**
@@ -26,40 +26,26 @@ class AccountController extends Controller
     {
         $user = User::find($id);
         if (!$user) {
-            return redirect('/account');
+            return redirect("/users/$id/edit");
         }
-        $isMe = session('user') && session('user')->id == $user->id;
-        return view('account-view')->with([
+        $isMe = session('user') && session('user')->id === $user->id;
+        return view('user-view')->with([
             'user' => $user,
             'isMe' => $isMe,
         ]);
     }
 
     /**
-     * Display the user edition form.
+     * Update the user account.
      */
-    public function edit()
+    public function update(int $id)
     {
-        $error = session('account-edit-error');
-        session()->forget('account-edit-error');
         $user = session('user');
         if (!$user) {
             return redirect('/signin');
         }
-        return view('account-edit')->with([
-            'user' => $user,
-            'error' => $error,
-        ]);
-    }
-
-    /**
-     * Update the user account.
-     */
-    public function update()
-    {
-        $user = session('user');
-        if (!$user) {
-            return redirect('/signin');
+        if ($user->id !== $id) {
+            return redirect('/users');
         }
         try {
             $this->validate(request(), [
@@ -70,25 +56,40 @@ class AccountController extends Controller
             $user->email = request('email');
             $user->description = request('description');
             // Update the password only if the user has entered a new one
-            if (request('password') && request('password') != '') {
+            if (request('password') && request('password') !== '') {
                 $user->password = request('password');
             }
             $user->save();
             session(['user' => $user]);
-            return redirect('/account');
+            return redirect("/users/$id")->with('success', 'Compte mis à jour');
         } catch (QueryException $e) {
-            session(['account-edit-error' => 'email_already_exists']);
+            return redirect("/users/$id/edit")->with('error', 'Email déjà utilisé');
         }
         catch (ValidationException $e) {
-            session(['account-edit-error' => 'unknown_error']);
+            return redirect("/users/$id/edit")->with('error', 'Champs invalides');
         }
     }
 
     /**
      * Delete the user account.
      */
-    public function delete()
+    public function delete(int $id)
     {
         // TODO
+    }
+
+    /**
+     * Display the user edition form.
+     */
+    public function edit(int $id)
+    {
+        $user = session('user');
+        if (!$user) {
+            return redirect('/signin');
+        }
+        if ($user->id !== $id) {
+            return redirect('/users');
+        }
+        return view('user-edit');
     }
 }

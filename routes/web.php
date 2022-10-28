@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 //use App\Http\Controllers\AboutController;
-use App\Http\Controllers\AccountController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -26,13 +26,13 @@ Route::get('/index', [IndexController::class, 'index']);
 
 //Route::get('/about', [AboutController::class, 'about']);
 
-// AccountController
+// UserController
 
-Route::get('/account', [AccountController::class, 'index']);
-Route::put('/account', [AccountController::class, 'update']);
-Route::get('/account/edit', [AccountController::class, 'edit']);
-Route::get('/account/{id}', [AccountController::class, 'show']);
-Route::delete('/account', [AccountController::class, 'delete']);
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'delete']);
+Route::get('/users/{id}/edit', [UserController::class, 'edit']);
 
 // AuthController
 
