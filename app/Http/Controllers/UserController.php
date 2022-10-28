@@ -14,8 +14,28 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('name')->get();
-        return view('user-list')->with('users', $users);
+        # Get the page number from the URL parameter (default = 1)
+        $page = request('page', 1);
+
+        if ($page < 1) {
+            return redirect('/users?page=1');
+        }
+
+        # Get the 10 users of the page
+        $users = User::orderBy('name')->paginate(10, ['*'], 'page', $page);
+
+        # Get the number of pages
+        $total = $users->lastPage();
+
+        if ($page > $total) {
+            return redirect('/users?page=' . $total);
+        }
+
+        return view('user-list')->with([
+            'users' => $users,
+            'page' => $page,
+            'total' => $total,
+        ]);
     }
 
     /**

@@ -8,12 +8,12 @@
     <form action="/signin" method="post">
         @csrf
         <div class="form-group">
-            <label for="email">Adresse email</label>
-            <input id="email" name="email" type="email">
+            <label for="email" class="form-item">Adresse email</label>
+            <input id="email" class="form-item" name="email" type="email" required>
         </div>
         <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input id="password" name="password" type="password">
+            <label for="password" class="form-item">Mot de passe</label>
+            <input id="password" class="form-item" name="password" type="password" required>
         </div>
-        <button type="submit">Se connecter</button>
+        <button type="submit" class="btn form-item">Se connecter</button>
 @endsection

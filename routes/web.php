@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
-//use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 
@@ -24,7 +24,7 @@ Route::get('/index', [IndexController::class, 'index']);
 
 // AboutController
 
-//Route::get('/about', [AboutController::class, 'about']);
+Route::get('/about', [AboutController::class, 'index']);
 
 // UserController
 

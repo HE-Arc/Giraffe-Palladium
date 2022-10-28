@@ -10,21 +10,21 @@
         {{ method_field('PUT') }}
         @csrf
         <div class="form-group">
-            <label for="name">Nom d'utilisateur</label>
-            <input id="name" name="name" type="text" value="{{ $user->name }}">
+            <label for="name" class="form-item">Nom d'utilisateur</label>
+            <input id="name" class="form-item" name="name" type="text" value="{{ $user->name }}" required>
         </div>
         <div class="form-group">
-            <label for="email">Adresse email</label>
-            <input id="email" name="email" type="email" value="{{ $user->email }}">
+            <label for="email" class="form-item">Adresse email</label>
+            <input id="email" class="form-item" name="email" type="email" value="{{ $user->email }}" required>
         </div>
         <div class="form-group">
-            <label for="password">Nouveau mot de passe (optionnel)</label>
-            <input id="password" name="password" type="password">
+            <label for="password" class="form-item">Nouveau mot de passe</label>
+            <input id="password" class="form-item" name="password" type="password">
         </div>
         <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" name="description">{{ $user->description }}</textarea>
+            <label for="description" class="form-item">Description</label>
+            <textarea id="description" class="form-item" name="description">{{ $user->description }}</textarea>
         </div>
-        <button type="submit">Modifier mon profil</button>
+        <button type="submit" class="btn form-item">Modifier mon profil</button>
     </form>
 @endsection

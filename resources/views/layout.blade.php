@@ -11,26 +11,21 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/users">Liste des utilisateurs</a></li>
+                <li><a href="/" class="nav-link">Accueil</a></li>
+                <li><a href="/users" class="nav-link">Liste des utilisateurs</a></li>
                 @if(session('user'))
-                    <li><a href="/users/{{ session('user')->id }}">Mon profil</a></li>
-                    <li><a href="/signout">Déconnexion</a></li>
+                    <li><a href="/users/{{ session('user')->id }}" class="nav-link">Mon profil ({{ session('user')->name }})</a></li>
+                    <li><a href="/signout" class="nav-link">Déconnexion</a></li>
                 @else
-                    <li><a href="/signin">Connexion</a></li>
-                    <li><a href="/signup">Inscription</a></li>
+                    <li><a href="/signin" class="nav-link">Connexion</a></li>
+                    <li><a href="/signup" class="nav-link">Inscription</a></li>
                 @endif
-                <li><a href="/about">À propos</a></li>
+                <li><a href="/about" class="nav-link">À propos</a></li>
             </ul>
         </nav>
     </header>
     <div class="container">
         <main>
-            @if(session('user'))
-                <p>Bonjour <strong>{{ session('user')->name }}</strong> ! <a href="/signout">Se déconnecter</a></p>
-            @else
-                <p>Bonjour visiteur !</p>
-            @endif
             <h1>@yield('title')</h1>
             @if (session('success'))
                 <p class="msgbox msg-success">{{ session('success') }}</p>
@@ -41,6 +36,6 @@
             @yield('content')
         </main>
     </div>
-    <footer>FOOTER</footer>
+    <footer>&copy; HE-Arc &ndash; {{ date('Y') }}</footer>
 </body>
 </html>
