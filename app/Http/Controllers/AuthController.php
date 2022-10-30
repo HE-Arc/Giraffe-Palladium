@@ -12,7 +12,7 @@ class AuthController extends Controller
     /**
      * Display the user connection form.
      */
-    public function formConnection()
+    public function index()
     {
         $error = session('signin-error');
         if (session('user')) {
@@ -31,8 +31,7 @@ class AuthController extends Controller
                 'email' => 'required|email',
                 'password' => 'required',
             ]);
-        }
-        catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             return redirect('/signin')->with('error', 'Champs invalides');
         }
 
@@ -54,7 +53,7 @@ class AuthController extends Controller
     /**
      * Display the user creation form.
      */
-    public function formCreation()
+    public function create()
     {
         $error = session('signup-error');
         if (session('user')) {
@@ -66,10 +65,9 @@ class AuthController extends Controller
     /**
      * Create the user.
      */
-    public function create()
+    public function store()
     {
-        try
-        {
+        try {
             $this->validate(request(), [
                 'name' => 'required',
                 'email' => 'required|email',
@@ -81,13 +79,9 @@ class AuthController extends Controller
             # Connect the user
             session(['user' => $user]);
             return redirect('/')->with('success', 'Compte créé avec succès');
-        }
-        catch (QueryException $e)
-        {
+        } catch (QueryException $e) {
             return redirect('/signup')->with('error', 'Email déjà utilisé');
-        }
-        catch (ValidationException $e)
-        {
+        } catch (ValidationException $e) {
             return redirect('/signup')->with('error', 'Champs invalides');
         }
     }

@@ -36,8 +36,8 @@ Route::get('/users/{id}/edit', [UserController::class, 'edit']);
 
 // AuthController
 
-Route::get('/signin', [AuthController::class, 'formConnection']);
+Route::get('/signin', [AuthController::class, 'index']);
 Route::post('/signin', [AuthController::class, 'connect']);
-Route::get('/signup', [AuthController::class, 'formCreation']);
-Route::post('/signup', [AuthController::class, 'create']);
+Route::get('/signup', [AuthController::class, 'create']);
+Route::post('/signup', [AuthController::class, 'store']);
 Route::get('/signout', [AuthController::class, 'disconnect']);
