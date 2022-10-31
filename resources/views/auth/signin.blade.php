@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.app')
 
 @section('title')
     Connexion
@@ -16,4 +16,4 @@
             <input id="password" class="form-item" name="password" type="password" required>
         </div>
         <button type="submit" class="btn form-item">Se connecter</button>
-@endsection
+    @endsection
