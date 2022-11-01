@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.app')
 
 @section('title')
     Profil utilisateur
@@ -10,7 +10,7 @@
     <p><strong>Créé le</strong> : {{ $user->created_at }}</p>
     <p><strong>Modifié le</strong> : {{ $user->updated_at }}</p>
     <p><strong>Description</strong> : <span style="white-space: pre-wrap">{{ $user->description }}</span></p>
-    @if($isMe)
+    @if ($isMe)
         <p><a href="/users/{{ $user->id }}/edit">Modifier mon profil</a></p>
     @endif
 @endsection

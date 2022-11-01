@@ -18,7 +18,7 @@ class UserController extends Controller
         $page = request('page', 1);
 
         if ($page < 1) {
-            return redirect('/users?page=1');
+            return redirect()->route('users.index', ['page' => 1]);
         }
 
         # Get the 10 users of the page
@@ -28,10 +28,10 @@ class UserController extends Controller
         $total = $users->lastPage();
 
         if ($page > $total) {
-            return redirect('/users?page=' . $total);
+            return redirect()->route('users.index', ['page' => $total]);
         }
 
-        return view('user-list')->with([
+        return view('users.index')->with([
             'users' => $users,
             'page' => $page,
             'total' => $total,
@@ -39,17 +39,19 @@ class UserController extends Controller
     }
 
     /**
-     * Display the user profile.
-     * @param int $id
+     * Display the user profil.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
     public function show(int $id)
     {
         $user = User::find($id);
         if (!$user) {
-            return redirect("/users/$id/edit");
+            return redirect()->route("users.edit", $id);
         }
         $isMe = session('user') && session('user')->id === $user->id;
-        return view('user-view')->with([
+        return view('users.show')->with([
             'user' => $user,
             'isMe' => $isMe,
         ]);
@@ -62,10 +64,10 @@ class UserController extends Controller
     {
         $user = session('user');
         if (!$user) {
-            return redirect('/signin');
+            return redirect()->route("auth.signin.connect");
         }
         if ($user->id !== $id) {
-            return redirect('/users');
+            return redirect()->route("users.index");
         }
         try {
             $this->validate(request(), [
@@ -81,12 +83,11 @@ class UserController extends Controller
             }
             $user->save();
             session(['user' => $user]);
-            return redirect("/users/$id")->with('success', 'Compte mis à jour');
+            return redirect()->route("users.show", $id)->with('success', 'Compte mis à jour');
         } catch (QueryException $e) {
-            return redirect("/users/$id/edit")->with('error', 'Email déjà utilisé');
-        }
-        catch (ValidationException $e) {
-            return redirect("/users/$id/edit")->with('error', 'Champs invalides');
+            return redirect()->route("users.edit", $id)->with('error', 'Email déjà utilisé');
+        } catch (ValidationException $e) {
+            return redirect()->route("users.edit", $id)->with('error', 'Champs invalides');
         }
     }
 
@@ -105,11 +106,11 @@ class UserController extends Controller
     {
         $user = session('user');
         if (!$user) {
-            return redirect('/signin');
+            return redirect()->route("auth.signin.index");
         }
         if ($user->id !== $id) {
-            return redirect('/users');
+            return redirect()->route("user.index");
         }
-        return view('user-edit');
+        return view('users.edit');
     }
 }

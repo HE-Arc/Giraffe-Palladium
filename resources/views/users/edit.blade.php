@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.app')
 
 @section('title')
     Profil utilisateur
@@ -6,9 +6,9 @@
 
 @section('content')
     @php($user = session('user'))
-    <form action="/users/{{ $user->id }}" method="post">
-        {{ method_field('PUT') }}
+    <form action="{{ route('users.update', $user->id) }}" method="post">
         @csrf
+        @method('PUT')
         <div class="form-group">
             <label for="name" class="form-item">Nom d'utilisateur</label>
             <input id="name" class="form-item" name="name" type="text" value="{{ $user->name }}" required>

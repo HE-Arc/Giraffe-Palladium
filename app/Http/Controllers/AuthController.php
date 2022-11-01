@@ -16,9 +16,9 @@ class AuthController extends Controller
     {
         $error = session('signin-error');
         if (session('user')) {
-            return redirect('/');
+            return redirect()->route('home');
         }
-        return view('signin');
+        return view('auth.signin');
     }
 
     /**
@@ -32,7 +32,7 @@ class AuthController extends Controller
                 'password' => 'required',
             ]);
         } catch (ValidationException $e) {
-            return redirect('/signin')->with('error', 'Champs invalides');
+            return redirect()->route('auth.signin.index')->with('error', 'Champs invalides');
         }
 
         # Check if the email and password are correct
@@ -41,29 +41,34 @@ class AuthController extends Controller
             if (password_verify(request('password'), $user->password)) {
                 # The user is connected
                 session(['user' => $user]);
-                return redirect('/users/' . $user->id);
+                return redirect()->route("users.show", $user->id);
             }
         }
 
         # If the user is not connected
         //session(['signin-error' => 'invalid_credentials']);
-        return redirect('/signin')->with('error', 'Identifiants invalides');
+        return redirect()->route('auth.signin.index')->with('error', 'Identifiants invalides');
     }
 
     /**
-     * Display the user creation form.
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
         $error = session('signup-error');
         if (session('user')) {
-            return redirect('/');
+            return redirect()->route("home");
         }
-        return view('signup');
+        return view('auth.signup');
     }
 
     /**
-     * Create the user.
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store()
     {
@@ -78,11 +83,11 @@ class AuthController extends Controller
 
             # Connect the user
             session(['user' => $user]);
-            return redirect('/')->with('success', 'Compte créé avec succès');
+            return redirect()->route('home')->with('success', 'Compte créé avec succès');
         } catch (QueryException $e) {
-            return redirect('/signup')->with('error', 'Email déjà utilisé');
+            return redirect()->route('auth.signup.create')->with('error', 'Email déjà utilisé');
         } catch (ValidationException $e) {
-            return redirect('/signup')->with('error', 'Champs invalides');
+            return redirect()->route('auth.signup.create')->with('error', 'Champs invalides');
         }
     }
 
@@ -92,6 +97,6 @@ class AuthController extends Controller
     public function disconnect()
     {
         session()->forget('user');
-        return redirect('/');
+        return redirect()->route('home');
     }
 }
