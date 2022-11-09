@@ -18,11 +18,13 @@ return new class extends Migration
 
             $table->foreignId('user_id') // borrower
                 ->constrained()
-                ->onDelete('cascade');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->foreignId('item_id') // item
                 ->constrained()
-                ->onDelete('cascade');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });
