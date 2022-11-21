@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('asks', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id') // borrower
-                ->constrained()
+            $table->foreignId('borrower_id')
+                ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             $table->foreignId('item_id') // item
-                ->constrained()
+                ->constrained() // auto-detect the correct table name
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 

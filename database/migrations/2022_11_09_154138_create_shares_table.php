@@ -16,17 +16,18 @@ return new class extends Migration
         Schema::create('shares', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('item_id') // item
-                ->constrained()
+            $table->foreignId('item_id')
+                ->constrained() // auto-detect the correct table name
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreignId('lender')
+            $table->foreignId('lender_id')
                 ->nullable()
                 ->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreignId('borrower')
+
+            $table->foreignId('borrower_id')
                 ->nullable()
                 ->references('id')->on('users')
                 ->onDelete('cascade')
