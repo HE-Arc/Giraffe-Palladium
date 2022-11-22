@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAuthRequest extends FormRequest
+class ConnectAuthRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class StoreAuthRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required',
-            'confirm-password' => 'required|same:password'
+            'password' => 'required'
         ];
     }
 
@@ -39,12 +37,9 @@ class StoreAuthRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Nom d'utilisateur requis.",
             'email.required' => 'Adresse email requise.',
             'email.email' => 'Adresse email invalide.',
             'password.required' => 'Mot de passe requis.',
-            'confirm-password.required' => 'Confirmation du mot de passe requise.',
-            'confirm-password.same' => 'Les mots de passe ne correspondent pas.',
         ];
     }
 }

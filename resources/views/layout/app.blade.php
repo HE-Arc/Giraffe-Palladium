@@ -35,12 +35,6 @@
     <main class="flex-shrink-0">
         <div class="container">
             <h1>@yield('title')</h1>
-            @if (session('success'))
-                <p class="msgbox msg-success">{{ session('success') }}</p>
-            @endif
-            @if (session('error'))
-                <p class="msgbox msg-error">{{ session('error') }}</p>
-            @endif
             @yield('content')
         </div>
     </main>

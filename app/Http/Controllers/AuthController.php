@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\ConnectAuthRequest;
+use App\Http\Requests\StoreAuthRequest;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -24,30 +27,18 @@ class AuthController extends Controller
     /**
      * Connect the user.
      */
-    public function connect()
+    public function connect(ConnectAuthRequest $request)
     {
-        try {
-            $this->validate(request(), [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
-        } catch (ValidationException $e) {
-            return redirect()->route('auth.signin.index')->with('error', 'Champs invalides');
+        $validated = $request->validated();
+
+        if(Auth::attempt($validated)) {
+            $request->session()->regenerate();
+            return redirect()->route("users.show", $user->id);
         }
 
-        # Check if the email and password are correct
-        $user = User::where('email', request('email'))->first();
-        if ($user) {
-            if (password_verify(request('password'), $user->password)) {
-                # The user is connected
-                session(['user' => $user]);
-                return redirect()->route("users.show", $user->id);
-            }
-        }
-
-        # If the user is not connected
-        //session(['signin-error' => 'invalid_credentials']);
-        return redirect()->route('auth.signin.index')->with('error', 'Identifiants invalides');
+        return back()->withErrors([
+            'email' => 'Les informations de connexion sont incorrectes.',
+        ])->onlyInput('email');
     }
 
     /**
@@ -70,26 +61,18 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(StoreAuthRequest $request)
     {
-        try {
-            $this->validate(request(), [
-                'name' => 'required',
-                'email' => 'required|email',
-                'password' => 'required',
-                'confirm-password' => 'required|same:password',
-            ]);
+        $validated = $request->validated();
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => $validated['password'],
+            'description' => $validated['description'],
+        ]);
+        session(['user' => $user]);
+        return redirect()->route('home');
 
-            $user = User::create(request(['name', 'email', 'password', 'description']));
-
-            # Connect the user
-            session(['user' => $user]);
-            return redirect()->route('home')->with('success', 'Compte créé avec succès');
-        } catch (QueryException $e) {
-            return redirect()->route('auth.signup.create')->with('error', 'Email déjà utilisé');
-        } catch (ValidationException $e) {
-            return redirect()->route('auth.signup.create')->with('error', 'Champs invalides');
-        }
     }
 
     /**
