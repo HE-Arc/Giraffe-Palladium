@@ -21,14 +21,16 @@
         <ul class="nav nav-pills">
             <li><a href="/" class="nav-link">Accueil</a></li>
             <li><a href="/users" class="nav-link">Liste des utilisateurs</a></li>
-            @if (session('user'))
-                <li><a href="/users/{{ session('user')->id }}" class="nav-link">Mon profil
-                        ({{ session('user')->name }})</a></li>
+            @auth
+                <li><a href="/users/{{ Auth::user()->id }}" class="nav-link">Mon profil
+                        ({{ Auth::user()->name }})
+                    </a></li>
                 <li><a href="/signout" class="nav-link">Déconnexion</a></li>
-            @else
+            @endauth
+            @guest
                 <li><a href="/signin" class="nav-link">Connexion</a></li>
                 <li><a href="/signup" class="nav-link">Inscription</a></li>
-            @endif
+            @endguest
             <li><a href="/about" class="nav-link">À propos</a></li>
         </ul>
     </header>

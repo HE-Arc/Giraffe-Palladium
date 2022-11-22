@@ -36,8 +36,8 @@ Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edi
 
 // AuthController
 
-Route::get('/signin', [AuthController::class, 'index'])->name('auth.signin.index');
+Route::get('/signin', [AuthController::class, 'index'])->middleware('guest')->name('auth.signin.index');
 Route::post('/signin', [AuthController::class, 'connect'])->name('auth.signin.connect');
-Route::get('/signup', [AuthController::class, 'create'])->name('auth.signup.create');
+Route::get('/signup', [AuthController::class, 'create'])->middleware('guest')->name('auth.signup.create');
 Route::post('/signup', [AuthController::class, 'store'])->name('auth.signup.store');
 Route::get('/signout', [AuthController::class, 'disconnect'])->name('auth.signout.disconnect');

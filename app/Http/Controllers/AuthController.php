@@ -17,10 +17,6 @@ class AuthController extends Controller
      */
     public function index()
     {
-        $error = session('signin-error');
-        if (session('user')) {
-            return redirect()->route('home');
-        }
         return view('auth.signin');
     }
 
@@ -33,6 +29,7 @@ class AuthController extends Controller
 
         if(Auth::attempt($validated)) {
             $request->session()->regenerate();
+            $user = Auth::user();
             return redirect()->route("users.show", $user->id);
         }
 
@@ -48,10 +45,6 @@ class AuthController extends Controller
      */
     public function create()
     {
-        $error = session('signup-error');
-        if (session('user')) {
-            return redirect()->route("home");
-        }
         return view('auth.signup');
     }
 
@@ -70,17 +63,18 @@ class AuthController extends Controller
             'password' => $validated['password'],
             'description' => $validated['description'],
         ]);
-        session(['user' => $user]);
-        return redirect()->route('home');
+        return redirect()->route('signin');
 
     }
 
     /**
      * Disconnect the user.
      */
-    public function disconnect()
+    public function disconnect(Request $request)
     {
-        session()->forget('user');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('home');
     }
 }
