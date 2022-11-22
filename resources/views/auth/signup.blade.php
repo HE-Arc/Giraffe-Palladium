@@ -16,6 +16,10 @@
             <input id="password" class="form-control" name="password" type="password" required>
         </div>
         <div class="mb-3">
+            <label for="confirm-password" class="form-label">Confirmation mot de passe</label>
+            <input id="confirm-password" class="form-control" name="confirm-password" type="password" required>
+        </div>
+        <div class="mb-3">
             <label for="name" class="form-label">Nom d'utilisateur</label>
             <input id="name" class="form-control" name="name" type="text" required>
         </div>
