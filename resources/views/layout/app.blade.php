@@ -41,7 +41,9 @@
             @if (session('error'))
                 <p class="msgbox msg-error">{{ session('error') }}</p>
             @endif
-            @yield('content')
+            <div class="container">
+                @yield('content')
+            </div>
         </div>
     </main>
     <footer class="footer mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
