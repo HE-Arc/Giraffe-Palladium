@@ -25,7 +25,7 @@ class StoreAuthRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required',
             'confirm-password' => 'required|same:password'
         ];

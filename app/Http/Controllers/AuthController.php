@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\ConnectAuthRequest;
 use App\Http\Requests\StoreAuthRequest;
-use Illuminate\Database\QueryException;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -57,13 +55,13 @@ class AuthController extends Controller
     public function store(StoreAuthRequest $request)
     {
         $validated = $request->validated();
-        $user = User::create([
+        User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'],
-            'description' => $validated['description'],
+            'description' => $validated['description'] ?? null,
         ]);
-        return redirect()->route('signin');
+        return redirect()->route('auth.signin.index');
 
     }
 
