@@ -14,7 +14,7 @@
             </ul>
         </div>
     @endif
-    <form action="/signup" method="post" class="col-md-8 col-lg-6 col-xxl-4">
+    <form action="{{ route('auth.signup.store') }}" method="post" class="col-md-8 col-lg-6 col-xxl-4">
         @csrf
         <div class="mb-3">
             <label for="email" class="form-label">Adresse email</label>
