@@ -12,26 +12,27 @@
 
 <body class="d-flex flex-column h-100">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <a href="{{ route('home') }}"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32">
                 <use xlink:href="#bootstrap"></use>
             </svg>
             <span class="fs-4">Giraffe Palladium</span>
         </a>
         <ul class="nav nav-pills">
-            <li><a href="/" class="nav-link">Accueil</a></li>
-            <li><a href="/users" class="nav-link">Liste des utilisateurs</a></li>
+            <li><a href="{{ route('home') }}" class="nav-link">Accueil</a></li>
+            <li><a href="{{ route('users.index') }}" class="nav-link">Liste des utilisateurs</a></li>
             @auth
-                <li><a href="/users/{{ Auth::user()->id }}" class="nav-link">Mon profil
+                <li><a href="{{ route('users.show', Auth::user()->id) }}" class="nav-link">Mon profil
                         ({{ Auth::user()->name }})
                     </a></li>
-                <li><a href="/signout" class="nav-link">Déconnexion</a></li>
+                <li><a href="{{ route('auth.signout.disconnect') }}" class="nav-link">Déconnexion</a></li>
             @endauth
             @guest
-                <li><a href="/signin" class="nav-link">Connexion</a></li>
-                <li><a href="/signup" class="nav-link">Inscription</a></li>
+                <li><a href="{{ route('auth.signin.index') }}" class="nav-link">Connexion</a></li>
+                <li><a href="{{ route('auth.signup.create') }}" class="nav-link">Inscription</a></li>
             @endguest
-            <li><a href="/about" class="nav-link">À propos</a></li>
+            <li><a href="{{ route('about') }}" class="nav-link">À propos</a></li>
         </ul>
     </header>
     <main class="flex-shrink-0">
@@ -43,7 +44,7 @@
     <footer class="footer mt-auto d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="container">
             <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                <a href="{{ route('home') }}" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                     <svg class="bi" width="30" height="24">
                         <use xlink:href="#bootstrap"></use>
                     </svg>

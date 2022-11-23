@@ -11,6 +11,6 @@
     <p><strong>Modifié le</strong> : {{ $user->updated_at }}</p>
     <p><strong>Description</strong> : <span style="white-space: pre-wrap">{{ $user->description }}</span></p>
     @if ($isMe)
-        <p><a href="/users/{{ $user->id }}/edit">Modifier mon profil</a></p>
+        <p><a href="{{ route('users.edit', $user->id) }}">Modifier mon profil</a></p>
     @endif
 @endsection
