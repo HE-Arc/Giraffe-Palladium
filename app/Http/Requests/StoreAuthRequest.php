@@ -42,6 +42,7 @@ class StoreAuthRequest extends FormRequest
             'name.required' => "Nom d'utilisateur requis.",
             'email.required' => 'Adresse email requise.',
             'email.email' => 'Adresse email invalide.',
+            'email.unique' => 'Cette adresse email est déjà utilisée.',
             'password.required' => 'Mot de passe requis.',
             'confirm-password.required' => 'Confirmation du mot de passe requise.',
             'confirm-password.same' => 'Les mots de passe ne correspondent pas.',
