@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
@@ -14,28 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        # Get the page number from the URL parameter (default = 1)
-        $page = request('page', 1);
-
-        if ($page < 1) {
-            return redirect()->route('users.index', ['page' => 1]);
-        }
-
-        # Get the 10 users of the page
-        $users = User::orderBy('name')->paginate(10, ['*'], 'page', $page);
-
-        # Get the number of pages
-        $total = $users->lastPage();
-
-        if ($page > $total) {
-            return redirect()->route('users.index', ['page' => $total]);
-        }
-
-        return view('users.index')->with([
-            'users' => $users,
-            'page' => $page,
-            'total' => $total,
-        ]);
+        $users = User::orderBy('name')->simplePaginate(20);
+        return view('users.index', ['users' => $users]);
     }
 
     /**
