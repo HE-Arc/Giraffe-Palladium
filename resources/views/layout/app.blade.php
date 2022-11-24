@@ -11,29 +11,55 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="{{ route('home') }}"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap"></use>
-            </svg>
-            <span class="fs-4">Giraffe Palladium</span>
-        </a>
-        <ul class="nav nav-pills">
-            <li><a href="{{ route('home') }}" class="nav-link">Accueil</a></li>
-            <li><a href="{{ route('users.index') }}" class="nav-link">Liste des utilisateurs</a></li>
-            @auth
-                <li><a href="{{ route('users.show', Auth::user()->id) }}" class="nav-link">Mon profil
-                        ({{ Auth::user()->name }})
-                    </a></li>
-                <li><a href="{{ route('auth.signout.disconnect') }}" class="nav-link">Déconnexion</a></li>
-            @endauth
-            @guest
-                <li><a href="{{ route('auth.signin.index') }}" class="nav-link">Connexion</a></li>
-                <li><a href="{{ route('auth.signup.create') }}" class="nav-link">Inscription</a></li>
-            @endguest
-            <li><a href="{{ route('about') }}" class="nav-link">À propos</a></li>
-        </ul>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ route('home') }}">Giraffe Palladium</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteNamed('home') ? 'active' : '' }}"
+                                aria-current="page" href="{{ route('home') }}">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteNamed('users.index') ? 'active' : '' }}"
+                                aria-current="page" href="{{ route('users.index') }}">Liste des
+                                utilisateurs
+                            </a>
+                        </li>
+                        @auth
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link {{ Route::currentRouteNamed('users.show') ? 'active' : '' }}"aria-current="page"href="{{ route('users.show', Auth::user()->id) }}">
+                                    Mon profil
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::currentRouteNamed('auth.signout.disconnect') ? 'active' : '' }}"
+                                    aria-current="page" href="{{ route('auth.signout.disconnect') }}">
+                                    Déconnexion
+                                </a>
+                            </li>
+                        @endauth
+                        @guest
+                            <li class="nav-item">
+                                <a href="{{ route('auth.signin.index') }}"
+                                    class="nav-link {{ Route::currentRouteNamed('auth.signin.index') ? 'active' : '' }}">Connexion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('auth.signup.create') }}"
+                                    class="nav-link  {{ Route::currentRouteNamed('auth.signup.create') ? 'active' : '' }}">Inscription</a>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
     <main class="flex-shrink-0">
         <div class="container">
