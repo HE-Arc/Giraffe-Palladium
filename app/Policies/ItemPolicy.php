@@ -53,7 +53,7 @@ class ItemPolicy
      */
     public function update(User $user, Item $item)
     {
-        //
+        return $user->id === $item->owner_id;
     }
 
     /**

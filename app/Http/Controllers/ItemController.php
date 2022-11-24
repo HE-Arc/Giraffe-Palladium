@@ -8,14 +8,10 @@ use App\Http\Requests\UpdateItemRequest;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        // no-op
     }
 
     /**
@@ -25,7 +21,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('items.create');
     }
 
     /**
@@ -36,7 +32,13 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $item = Item::create([
+            'owner_id' => auth()->id(),
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+        ]);
+        return redirect()->route('items.show', $item->id);
     }
 
     /**
@@ -45,9 +47,13 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show($id)
     {
-        //
+        $item = Item::findOrFail($id);
+       return view('items.show', [
+            'item' => $item,
+            'isMine' => $item->owner->id == auth()->user()->id,
+       ]);
     }
 
     /**
@@ -56,9 +62,13 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit(Item $item)
+    public function edit($id)
     {
-        //
+        $item = Item::findOrFail($id);
+        $this->authorize('update', $item);
+        return view('items.edit', [
+            'item' => $item,
+        ]);
     }
 
     /**
@@ -68,9 +78,16 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateItemRequest $request, Item $item)
+    public function update(UpdateItemRequest $request, $id)
     {
-        //
+        $item = Item::findOrFail($id);
+        $this->authorize('update', $item);
+        $validated = $request->validated();
+        $item->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+        ]);
+        return redirect()->route('items.show', $item->id);
     }
 
     /**

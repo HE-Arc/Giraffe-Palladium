@@ -29,10 +29,11 @@ class UserController extends Controller
         if (!$user) {
             return redirect()->route("users.edit", $id);
         }
-        $isMe = session('user') && session('user')->id === $user->id;
-        return view('users.show')->with([
+        $isMe = $user->id === auth()->id();
+        return view('users.show', [
             'user' => $user,
             'isMe' => $isMe,
+            'items' => $user->items()->get(),
         ]);
     }
 

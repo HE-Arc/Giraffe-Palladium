@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -29,6 +30,13 @@ Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+
+// ItemsController
+Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
+Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+Route::get('/items/{id}', [ItemController::class, 'show'])->name('items.show');
+Route::get('/items/{id}/edit', [ItemController::class, 'edit'])->name('items.edit');
+Route::put('/items/{id}', [ItemController::class, 'update'])->name('items.update');
 
 // AuthController
 Route::get('/signin', [AuthController::class, 'index'])->middleware('guest')->name('auth.signin.index');
