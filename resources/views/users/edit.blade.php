@@ -12,12 +12,13 @@
             @method('PUT')
             <div class="mb-3">
                 <label for="name" class="form-label">Nom d'utilisateur</label>
-                <input id="name" class="form-control" name="name" type="text" value="{{ $user->name }}" required>
+                <input id="name" class="form-control" name="name" type="text" value="{{ old('name', $user->name) }}"
+                    required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Adresse email</label>
-                <input id="email" class="form-control" name="email" type="email" value="{{ $user->email }}"
-                    required>
+                <input id="email" class="form-control" name="email" type="email"
+                    value="{{ old('email', $user->email) }}" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Nouveau mot de passe</label>
@@ -25,7 +26,7 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea id="description" class="form-control" name="description">{{ $user->description }}</textarea>
+                <textarea id="description" class="form-control" name="description">{{ old('description', $user->description) }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Modifier mon profil</button>
         </form>
