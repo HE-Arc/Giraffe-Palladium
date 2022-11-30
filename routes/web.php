@@ -34,6 +34,7 @@ Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.e
 // ItemsController
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+Route::get('/items/borrowable', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
 Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
 Route::put('/items/{item}', [ItemController::class, 'update'])->name('items.update');

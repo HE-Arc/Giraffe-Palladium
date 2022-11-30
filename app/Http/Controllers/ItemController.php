@@ -3,15 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Share;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 
 class ItemController extends Controller
 {
-
+    /**
+     * Show the list of all borrowable items.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        // no-op
+        // Get all shares that that are borrowable, they are referenced in the Share table
+        // The share should have a null value for the borrower id
+        // The share should have a deadline date that is in the future
+        // The share should have the "displayed" field set to true
+        // The share should have the "terminated" field set to false
+        $shares = Share::whereNull('borrower_id')
+            ->where('deadline', '>', now())
+            ->where('displayed', true)
+            ->where('terminated', false)
+            ->get();
+
+        // Get all items that are referenced in the shares
+        $items = Item::whereIn('id', $shares->pluck('item_id'))->get();
+
+        return view('items.index', ['items' => $items]);
     }
 
     /**
