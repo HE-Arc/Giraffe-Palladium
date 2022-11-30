@@ -1,11 +1,10 @@
 @extends('layout.app')
 
 @section('title')
-    Liste des utilisateurs
+    Liste de mes emprunts :
 @endsection
 
 @section('content')
-    <p>Vous avez empruntez ces objets :</p>
     <div class="d-flex">
         <ul>
             @foreach ($borrows as $borrow) {{-- type of : Share --}}
@@ -20,17 +19,15 @@
                     @endif
                 </li>
                 <li>
-                    {{ $borrow->deadline }}
+                    @if ($borrow->deadline)
+                        {{-- todo : formattage de la date --}}
+                        {{-- {{ ($borrow->deadline)->format('d.m.Y') }} --}}
+                        {{ $borrow->deadline }}
+                    @else
+                        Pas de date limite
+                    @endif
                 </li>
             @endforeach
         </ul>
     </div>
-    {{-- <ul>
-        @foreach ($users as $user)
-            <li><a href="{{ route('users.show', $user->id) }}">{{ $user->name }} ({{ $user->email }})</a></li>
-        @endforeach
-    </ul>
-    <div class="d-flex">
-        {{ $users->links() }}
-    </div> --}}
 @endsection
