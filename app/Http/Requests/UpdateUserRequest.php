@@ -22,7 +22,6 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    // TODO oof
     public function rules()
     {
         return [
