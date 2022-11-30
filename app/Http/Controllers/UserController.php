@@ -38,7 +38,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //$this->authorize('update', $user);
+        $this->authorize('update', $user);
         $validated = $request->validated();
 
         $user->name = $validated['name'];

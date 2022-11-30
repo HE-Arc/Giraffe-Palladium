@@ -8,6 +8,11 @@
     @if ($isMine)
         <p>{{ $item->description }}</p>
         <a class="btn btn-primary" href="{{ route('items.edit', $item->id) }}">Edit</a>
+        <form action="{{ route('items.destroy', $item->id) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger" title="Delete">Delete</button>
+        </form>
     @else
         <p>
             Objet proposé par
