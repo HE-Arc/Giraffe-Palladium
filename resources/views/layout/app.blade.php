@@ -32,6 +32,10 @@
                                 utilisateurs
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteNamed('items.index') ? 'active' : '' }}"
+                                aria-current="page" href="{{ route('items.index') }}">Liste des objets empruntables</a>
+                        </li>
                         @auth
                             <li class="nav-item">
                                 <a
