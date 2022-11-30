@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Item::class, 'owner_id', 'id');
     }
+
+    public function borrows()
+    {
+        return $this->hasMany(Share::class, 'borrower_id', 'id');
+    }
 }

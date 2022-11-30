@@ -30,6 +30,7 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{user}', [UserController::class, 'delete'])->name('users.delete');
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::get('/users/{user}/borrows', [UserController::class, 'borrows'])->name('users.borrows');
 
 // ItemsController
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');

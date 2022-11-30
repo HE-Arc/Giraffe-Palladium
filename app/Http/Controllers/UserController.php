@@ -38,7 +38,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //$this->authorize('update', $user);
+        $this->authorize('update', $user);
         $validated = $request->validated();
 
         $user->name = $validated['name'];
@@ -67,5 +67,13 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('users.edit', ['user' => $user]);
+    }
+
+    public function borrows(User $user)
+    {
+        return view('users.borrows', [
+            'user' => $user,
+            'borrows' => $user->borrows()->get(),
+        ]);
     }
 }
