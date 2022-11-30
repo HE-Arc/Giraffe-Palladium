@@ -67,4 +67,12 @@ class UserController extends Controller
     {
         return view('users.edit', ['user' => $user]);
     }
+
+    public function borrows(User $user)
+    {
+        return view('users.borrows', [
+            'user' => $user,
+            'borrows' => $user->borrows()->get(),
+        ]);
+    }
 }
