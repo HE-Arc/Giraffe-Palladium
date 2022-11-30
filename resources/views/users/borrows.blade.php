@@ -16,4 +16,9 @@
             @endforeach
         </ul>
     </div>
+
+    <div class="d-flex">
+        {{ $borrows->links() }}
+    </div>
+
 @endsection

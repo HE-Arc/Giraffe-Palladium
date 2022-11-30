@@ -71,9 +71,11 @@ class UserController extends Controller
     public function borrows(User $user)
     {
         $this->authorize('borrows', $user);
+
+        $borrows = $user->borrows()->orderby("deadline")->simplePaginate(10);
         return view('users.borrows', [
             'user' => $user,
-            'borrows' => $user->borrows()->orderby("deadline")->get(),
+            'borrows' => $borrows,
         ]);
     }
 }
