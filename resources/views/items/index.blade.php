@@ -13,4 +13,7 @@
             </li>
         @endforeach
     </ul>
+    <div class="d-flex">
+        {{ $items->links() }}
+    </div>
 @endsection

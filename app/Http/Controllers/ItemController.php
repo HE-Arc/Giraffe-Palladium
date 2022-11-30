@@ -22,13 +22,12 @@ class ItemController extends Controller
         // The share should have the "displayed" field set to true
         // The share should have the "terminated" field set to false
         $shares = Share::whereNull('borrower_id')
-            ->where('deadline', '>', now())
-            ->where('displayed', true)
-            ->where('terminated', false)
             ->get();
 
         // Get all items that are referenced in the shares
-        $items = Item::whereIn('id', $shares->pluck('item_id'))->get();
+        $items = Item::whereIn('id', $shares->pluck('item_id'))
+            ->orderBy('title')
+            ->simplePaginate(20);
 
         return view('items.index', ['items' => $items]);
     }
