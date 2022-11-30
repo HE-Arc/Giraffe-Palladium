@@ -47,13 +47,12 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Item $item)
     {
-        $item = Item::findOrFail($id);
-       return view('items.show', [
+        return view('items.show', [
             'item' => $item,
             'isMine' => $item->owner->id == auth()->user()->id,
-       ]);
+        ]);
     }
 
     /**
@@ -62,9 +61,8 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Item $item)
     {
-        $item = Item::findOrFail($id);
         $this->authorize('update', $item);
         return view('items.edit', [
             'item' => $item,
@@ -78,9 +76,8 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateItemRequest $request, $id)
+    public function update(UpdateItemRequest $request, Item $item)
     {
-        $item = Item::findOrFail($id);
         $this->authorize('update', $item);
         $validated = $request->validated();
         $item->update([

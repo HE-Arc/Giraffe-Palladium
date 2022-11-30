@@ -26,17 +26,17 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 // UserController
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [UserController::class, 'delete'])->name('users.delete');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 
 // ItemsController
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
-Route::get('/items/{id}', [ItemController::class, 'show'])->name('items.show');
-Route::get('/items/{id}/edit', [ItemController::class, 'edit'])->name('items.edit');
-Route::put('/items/{id}', [ItemController::class, 'update'])->name('items.update');
+Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
+Route::get('/items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
+Route::put('/items/{item}', [ItemController::class, 'update'])->name('items.update');
 
 // AuthController
 Route::get('/signin', [AuthController::class, 'index'])->middleware('guest')->name('auth.signin.index');

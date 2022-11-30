@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Database\QueryException;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,12 +23,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(User $user)
     {
-        $user = User::find($id);
-        if (!$user) {
-            return redirect()->route("users.edit", $id);
-        }
         $isMe = $user->id === auth()->id();
         return view('users.show', [
             'user' => $user,
@@ -40,41 +36,27 @@ class UserController extends Controller
     /**
      * Update the user account.
      */
-    public function update(int $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user = session('user');
-        if (!$user) {
-            return redirect()->route("auth.signin.connect");
+        //$this->authorize('update', $user);
+        $validated = $request->validated();
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->description = $validated['description'] ?? null;
+        if ($validated['password']) {
+            $user->setPasswordAttribute($validated['password']);
         }
-        if ($user->id !== $id) {
-            return redirect()->route("users.index");
-        }
-        try {
-            $this->validate(request(), [
-                'name' => 'required',
-                'email' => 'required|email',
-            ]);
-            $user->name = request('name');
-            $user->email = request('email');
-            $user->description = request('description');
-            // Update the password only if the user has entered a new one
-            if (request('password') && request('password') !== '') {
-                $user->password = request('password');
-            }
-            $user->save();
-            session(['user' => $user]);
-            return redirect()->route("users.show", $id)->with('success', 'Compte mis à jour');
-        } catch (QueryException $e) {
-            return redirect()->route("users.edit", $id)->with('error', 'Email déjà utilisé');
-        } catch (ValidationException $e) {
-            return redirect()->route("users.edit", $id)->with('error', 'Champs invalides');
-        }
+
+        $user->save();
+
+        return redirect()->route('users.show', $user->id);
     }
 
     /**
      * Delete the user account.
      */
-    public function delete(int $id)
+    public function delete(User $user)
     {
         // TODO
     }
@@ -82,15 +64,8 @@ class UserController extends Controller
     /**
      * Display the user edition form.
      */
-    public function edit(int $id)
+    public function edit(User $user)
     {
-        $user = session('user');
-        if (!$user) {
-            return redirect()->route("auth.signin.index");
-        }
-        if ($user->id !== $id) {
-            return redirect()->route("user.index");
-        }
-        return view('users.edit');
+        return view('users.edit', ['user' => $user]);
     }
 }
