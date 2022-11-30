@@ -72,7 +72,7 @@ class UserController extends Controller
     {
         return view('users.borrows', [
             'user' => $user,
-            'borrows' => $user->borrows()->get(),
+            'borrows' => $user->borrows()->orderby("deadline")->get(),
         ]);
     }
 }
