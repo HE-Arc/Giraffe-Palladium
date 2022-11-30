@@ -41,7 +41,7 @@ class AskPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -65,7 +65,7 @@ class AskPolicy
      */
     public function delete(User $user, Ask $ask)
     {
-        //
+        return $ask->borrower_id === $user->id;
     }
 
     /**

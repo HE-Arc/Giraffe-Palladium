@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AuthController;
@@ -30,6 +31,10 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 Route::delete('/users/{user}', [UserController::class, 'delete'])->name('users.delete');
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+
+// AskController
+Route::post('/asks', [AskController::class, 'store'])->middleware('auth')->name('asks.store');
+Route::delete('/asks/{ask}', [AskController::class, 'destroy'])->middleware('auth')->name('asks.destroy');
 
 // ItemsController
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');

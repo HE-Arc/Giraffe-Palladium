@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ask extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'borrower_id',
+        'item_id',
+    ];
 }

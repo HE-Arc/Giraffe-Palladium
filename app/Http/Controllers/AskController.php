@@ -36,7 +36,22 @@ class AskController extends Controller
      */
     public function store(StoreAskRequest $request)
     {
-        //
+        $this->authorize('create', Ask::class);
+        $validated = $request->validated();
+        
+        // if borrower already trying to borrow this item, redirect to item page
+        $existingAsk = Ask::where('borrower_id', auth()->id())
+            ->where('item_id', $validated['item_id'])
+            ->first();
+        if ($existingAsk) {
+            return redirect()->route('items.show', $existingAsk->item_id);
+        }
+
+        Ask::create([
+            'borrower_id' => auth()->id(),
+            'item_id' => $validated['item_id'],
+        ]);
+        return redirect()->route('items.show', $validated['item_id']);
     }
 
     /**
@@ -81,6 +96,8 @@ class AskController extends Controller
      */
     public function destroy(Ask $ask)
     {
-        //
+        $this->authorize('delete', $ask);
+        $ask->delete();
+        return redirect()->route('items.show', $ask->item_id);
     }
 }

@@ -52,6 +52,7 @@ class ItemController extends Controller
         return view('items.show', [
             'item' => $item,
             'isMine' => $item->owner->id == auth()->user()->id,
+            'myAsk' => $item->asks()->where('borrower_id', auth()->user()->id)->first(),
         ]);
     }
 

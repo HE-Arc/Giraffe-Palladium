@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreAskRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreAskRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,23 @@ class StoreAskRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'item_id' => [
+                'required',
+                'exists:items,id',
+            ]
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages()
+    {
+        return [
+            'item_id.required' => 'Please select an item',
+            'item_id.exists' => 'Please select a valid item'
         ];
     }
 }

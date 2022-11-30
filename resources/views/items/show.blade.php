@@ -18,8 +18,19 @@
             Objet proposé par
             <a href="{{ route('users.show', $item->owner->id) }}">{{ $item->owner->name }} ({{ $item->owner->email }})</a>
         </p>
-        <p>
-            <a class="btn btn-primary" href="#">Demander à emprunter l'objet</a>
-        </p>
+
+        @if (is_null($myAsk))
+            <form action="{{ route('asks.store') }}" method="post" class="d-inline">
+                @csrf
+                <input type="hidden" name="item_id" value="{{ $item->id }}">
+                <button type="submit" class="btn btn-primary" title="Ask">Demander à emprunter l'objet</button>
+            </form>
+        @else
+            <form action="{{ route('asks.destroy', $myAsk->id) }}" method="post" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" title="Cancel">Annuler la demande d'emprunt</button>
+            </form>
+        @endif
     @endif
 @endsection
