@@ -8,25 +8,11 @@
     <div class="d-flex">
         <ul>
             @foreach ($borrows as $borrow) {{-- type of : Share --}}
-                <li>
-                    {{ $borrow->item->title }}
-                </li>
-                <li>
-                    @if($borrow->lender)
-                        {{ $borrow->lender->name }}
-                    @else
-                        {{ $borrow->nonuser_lender }}
-                    @endif
-                </li>
-                <li>
-                    @if ($borrow->deadline)
-                        {{-- todo : formattage de la date --}}
-                        {{-- {{ ($borrow->deadline)->format('d.m.Y') }} --}}
-                        {{ $borrow->deadline }}
-                    @else
-                        Pas de date limite
-                    @endif
-                </li>
+                <x-share
+                    :title="$borrow->item->title"
+                    :name="$borrow->lender ? $borrow->lender->name : $borrow->nonuser_lender"
+                    :deadline="$borrow->deadline"
+                />
             @endforeach
         </ul>
     </div>
