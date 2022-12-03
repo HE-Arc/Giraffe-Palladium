@@ -63,11 +63,11 @@ class User extends Authenticatable
 
     public function borrows()
     {
-        return $this->hasMany(Share::class, 'borrower_id');
+        return $this->hasMany(Share::class, 'borrower_id')->where('terminated', false);
     }
 
     public function lends()
     {
-        return $this->hasMany(Share::class, 'lender_id');
+        return $this->hasMany(Share::class, 'lender_id')->where('terminated', false);
     }
 }
