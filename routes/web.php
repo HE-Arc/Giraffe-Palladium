@@ -32,6 +32,7 @@ Route::put('/users/{user}', [UserController::class, 'update'])->name('users.upda
 Route::delete('/users/{user}', [UserController::class, 'delete'])->name('users.delete');
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::get('/users/{user}/borrows', [UserController::class, 'borrows'])->name('users.borrows');
+Route::get('/users/{user}/lends', [UserController::class, 'lends'])->name('users.lends');
 
 // AskController
 Route::post('/asks', [AskController::class, 'store'])->middleware('auth')->name('asks.store');
