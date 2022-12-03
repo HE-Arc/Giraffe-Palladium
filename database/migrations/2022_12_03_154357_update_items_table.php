@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->boolean('borrowable')->default(true);
+            $table->boolean('listed')->default(true);
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->dropColumn('borrowable');
+            $table->dropColumn('listed');
         });
     }
 };
