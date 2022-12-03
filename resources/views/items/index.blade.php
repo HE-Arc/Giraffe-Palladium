@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    Liste des objets empruntables
+    Objets empruntables
 @endsection
 
 @section('content')
