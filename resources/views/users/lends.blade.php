@@ -5,17 +5,7 @@
 @endsection
 
 @section('content')
-<div class="d-flex">
-    <ul>
-        @foreach ($lends as $lend) {{-- type of : Share --}}
-            <x-share
-                :title="$lend->item->title"
-                :name="$lend->borrower ? $lend->borrower->name : $lend->nonuser_borrower"
-                :deadline="$lend->deadline"
-            />
-        @endforeach
-    </ul>
-</div>
+<x-shares :shares="$lends" :borrowView="false" />
 
 <div class="d-flex">
     {{ $lends->links() }}

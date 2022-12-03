@@ -26,37 +26,13 @@
                 <a href="{{ route('users.lends', Auth::user()->id) }}"">
                     {{ $user->lends->count() }} prêt(s) en cours
                 </a>
-                <div>
-                    <ul>
-                        @if ($lends->count() > 0)
-                            @foreach ($lends as $lend) {{-- type of : Share --}}
-                                <x-share
-                                    :title="$lend->item->title"
-                                    :name="$lend->borrower ? $lend->borrower->name : $lend->nonuser_borrower"
-                                    :deadline="$lend->deadline"
-                                />
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
+                <x-shares :shares="$lends" :borrowView="false" />
             </li>
             <li>
                 <a href="{{ route('users.borrows', Auth::user()->id) }}">
                     {{ $user->borrows->count() }} emprunt(s) en cours
                 </a>
-                <div>
-                    <ul>
-                        @if ($borrows->count() > 0)
-                            @foreach ($borrows as $borrow) {{-- type of : Share --}}
-                                <x-share
-                                    :title="$borrow->item->title"
-                                    :name="$borrow->lender ? $borrow->lender->name : $borrow->nonuser_lender"
-                                    :deadline="$borrow->deadline"
-                                />
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
+                <x-shares :shares="$borrows" :borrowView="true" />
             </li>
         </ul>
     @endif
