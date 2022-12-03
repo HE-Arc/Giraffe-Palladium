@@ -18,6 +18,7 @@ class IndexController extends Controller
             $lends = $user->lends()->orderby("deadline")->take($nbShow)->get();
             $borrows = $user->borrows()->orderby("deadline")->take($nbShow)->get();
         }
+
         return view('home',  [
             'user' => $user,
             'lends' => $lends ?? null,
