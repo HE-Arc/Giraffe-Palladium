@@ -2,13 +2,16 @@
     $borrowView (boolean),
     $share (App\Models\Share)
 --}}
-<div class="d-flex">
-    <ul>
-        <li>Objet</li>
-        <li>{{ $borrowView ? "Prêteur" : "Emprunteur"}}</li>
-        <li>Date limite</li>
-    </ul>
-    <ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Objet</th>
+            <th scope="col">{{ $borrowView ? "Prêteur" : "Emprunteur"}}</th>
+            <th scope="col">Date limite</th>
+        </tr>
+        </tr>
+    </thead>
+    <tbody>
         @foreach ($shares as $share) {{-- type of : Share --}}
             @if ($borrowView)
                 <x-share
@@ -24,6 +27,6 @@
                 />
             @endif
         @endforeach
-    </ul>
-</div>
+    </tbody>
+</table>
 
