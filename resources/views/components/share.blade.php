@@ -6,9 +6,7 @@
 </li>
 <li>
     @if ($deadline)
-        {{-- todo : formattage de la date --}}
-        {{-- {{ ($deadline)->format('d.m.Y') }} --}}
-        {{ $deadline }}
+        {{ ($deadline)->format('d.m.Y') }}
     @else
         Pas de date limite
     @endif

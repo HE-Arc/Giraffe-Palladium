@@ -53,11 +53,11 @@ class User extends Authenticatable
 
     public function items()
     {
-        return $this->hasMany(Item::class, 'owner_id', 'id');
+        return $this->hasMany(Item::class, 'owner_id');
     }
 
     public function borrows()
     {
-        return $this->hasMany(Share::class, 'borrower_id', 'id');
+        return $this->hasMany(Share::class, 'borrower_id');
     }
 }

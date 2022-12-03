@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    Liste de mes emprunts :
+    Mes emprunts
 @endsection
 
 @section('content')
