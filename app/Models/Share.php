@@ -9,6 +9,9 @@ class Share extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'deadline'  => 'datetime',
+    ];
 
     public function borrower()
     {
@@ -25,4 +28,3 @@ class Share extends Model
         return $this->belongsTo(Item::class, 'item_id');
     }
 }
-
