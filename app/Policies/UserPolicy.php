@@ -91,7 +91,7 @@ class UserPolicy
         //
     }
 
-    public function borrows(User $user, User $model)
+    public function activeShare(User $user, User $model)
     {
         return $user->id === $model->id;
     }

@@ -70,12 +70,23 @@ class UserController extends Controller
 
     public function borrows(User $user)
     {
-        $this->authorize('borrows', $user);
+        $this->authorize('activeShare', $user);
 
         $borrows = $user->borrows()->orderby("deadline")->simplePaginate(10);
         return view('users.borrows', [
             'user' => $user,
             'borrows' => $borrows,
+        ]);
+    }
+
+    public function lends(User $user)
+    {
+        $this->authorize('activeShare', $user);
+
+        $lends = $user->lends()->orderby("deadline")->simplePaginate(10);
+        return view('users.lends', [
+            'user' => $user,
+            'lends' => $lends,
         ]);
     }
 }

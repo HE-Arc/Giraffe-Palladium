@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Share::class, 'borrower_id');
     }
+
+    public function lends()
+    {
+        return $this->hasMany(Share::class, 'lender_id');
+    }
 }
