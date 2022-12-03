@@ -15,8 +15,6 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-        // Note : when 1 item is created, a share entry must be created too
-
         // ===============================
         // Clean table
         // ===============================
@@ -34,6 +32,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '1',
             'title' => 'Mario Party',
             'description' => 'Nintendo Switch game',
+            'borrowable' => false,
         ]);
 
         \App\Models\Item::factory()->create([
@@ -41,6 +40,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '1',
             'title' => 'Mario Kart',
             'description' => 'Nintendo Switch game',
+            'borrowable' => false,
         ]);
 
         \App\Models\Item::factory()->create([
@@ -48,6 +48,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '1',
             'title' => 'Backpack',
             'description' => 'The backpack of my mother',
+            'borrowable' => false,
         ]);
 
         // ===============================
@@ -59,6 +60,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '2',
             'title' => 'Calculator',
             'description' => 'HP 12C',
+            'borrowable' => false,
         ]);
 
         \App\Models\Item::factory()->create([
@@ -66,6 +68,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '2',
             'title' => 'Book of Mathematics',
             'description' => 'How to solve some problems',
+            'borrowable' => true,
         ]);
 
         \App\Models\Item::factory()->create([
@@ -73,6 +76,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '2',
             'title' => 'Keyboard',
             'description' => 'FR-CH layout\nAsus ROG',
+            'borrowable' => true,
         ]);
 
         // ===============================
@@ -84,6 +88,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '3',
             'title' => 'Swiss Knife',
             'description' => 'Victorinox',
+            'borrowable' => true,
         ]);
 
         \App\Models\Item::factory()->create([
@@ -91,6 +96,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '3',
             'title' => 'BD Marsupilami 1',
             'description' => 'Great BD, i share it to let you discover it',
+            'borrowable' => true,
         ]);
 
         \App\Models\Item::factory()->create([
@@ -98,6 +104,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '3',
             'title' => 'Green Tupperware',
             'description' => 'Usefull to store some food',
+            'borrowable' => false,
         ]);
 
         // ===============================
@@ -109,7 +116,7 @@ class ItemSeeder extends Seeder
             'owner_id' => '4',
             'title' => 'USB Key',
             'description' => '16GB',
+            'borrowable' => false,
         ]);
-
     }
 }
