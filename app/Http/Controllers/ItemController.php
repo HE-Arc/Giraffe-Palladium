@@ -21,6 +21,7 @@ class ItemController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Item::class);
         return view('items.create');
     }
 
@@ -32,6 +33,7 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
+        $this->authorize('create', Item::class);
         $validated = $request->validated();
         $item = Item::create([
             'owner_id' => auth()->id(),
@@ -49,10 +51,12 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
+        $isMine = optional(auth())->id() === $item->owner_id;
+        $myAsk = auth()->guest() ? null : $item->asks()->where('borrower_id', auth()->id())->first();
         return view('items.show', [
             'item' => $item,
-            'isMine' => $item->owner->id == auth()->user()->id,
-            'myAsk' => $item->asks()->where('borrower_id', auth()->user()->id)->first(),
+            'isMine' => $isMine,
+            'myAsk' => $myAsk,
         ]);
     }
 
