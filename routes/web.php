@@ -35,8 +35,8 @@ Route::get('/users/{user}/borrows', [UserController::class, 'borrows'])->name('u
 Route::get('/users/{user}/lends', [UserController::class, 'lends'])->name('users.lends');
 
 // AskController
-Route::post('/asks', [AskController::class, 'store'])->middleware('auth')->name('asks.store');
-Route::delete('/asks/{ask}', [AskController::class, 'destroy'])->middleware('auth')->name('asks.destroy');
+Route::post('/asks', [AskController::class, 'store'])->name('asks.store');
+Route::delete('/asks/{ask}', [AskController::class, 'destroy'])->name('asks.destroy');
 
 // ItemsController
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
