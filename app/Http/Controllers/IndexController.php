@@ -11,8 +11,7 @@ class IndexController extends Controller
     public function index()
     {
         $nbShow = 3;
-        $user = User::find(Auth::id());
-        // $user = Auth::user(); // This is the same as the line above, but VSC doesn't did the type casting to User, so no intellisense
+        $user = auth()->user();
 
         if ($user){
             $lends = $user->lends()->orderby("deadline")->take($nbShow)->get();
