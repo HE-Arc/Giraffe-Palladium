@@ -5,14 +5,23 @@
 @endsection
 
 @section('content')
-    <ul>
-        @foreach ($items as $item)
-            <li>
-                <!-- TODO: use the item component -->
-                <a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a>
-            </li>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Objet</th>
+            <th scope="col">Prêteur</th>
+        </tr>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($items as $item) {{-- type of : Item --}}
+            <tr>
+                <td><a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a></td>
+                <td><a href="{{ route('users.show', $item->owner->id) }}">{{ $item->owner->name }}</a></td>
         @endforeach
-    </ul>
+    </tbody>
+</table>
+
     <div class="d-flex">
         {{ $items->links() }}
     </div>

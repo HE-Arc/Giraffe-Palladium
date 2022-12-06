@@ -24,4 +24,9 @@ class Item extends Model
     {
         return $this->hasMany(Ask::class);
     }
+
+    public function shares()
+    {
+        return $this->hasMany(Share::class);
+    }
 }

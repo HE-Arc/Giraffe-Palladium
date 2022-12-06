@@ -16,17 +16,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        // Get all shares that that are borrowable, they are referenced in the Share table
-        // The share should have a null value for the borrower id
-        // The share should have a deadline date that is in the future
-        // The share should have the "displayed" field set to true
-        // The share should have the "terminated" field set to false
-        $shares = Share::whereNull('borrower_id')
-            ->get();
-
-        // Get all items that are referenced in the shares
-        $items = Item::whereIn('id', $shares->pluck('item_id'))
-            ->orderBy('title')
+        // Get all items that are borrowable
+        $items = Item::where('listed', true)
+            ->whereDoesntHave('shares', function ($query) {
+                $query->where('terminated', false);
+            })
             ->simplePaginate(20);
 
         return view('items.index', ['items' => $items]);
