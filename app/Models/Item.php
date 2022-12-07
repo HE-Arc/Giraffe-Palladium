@@ -29,4 +29,15 @@ class Item extends Model
     {
         return $this->hasMany(Share::class);
     }
+
+    /**
+     * Get all borrowable items.
+     */
+    public static function borrowable()
+    {
+        return Item::where('listed', true)
+            ->whereDoesntHave('shares', function ($query) {
+                $query->where('terminated', false);
+            });
+    }
 }

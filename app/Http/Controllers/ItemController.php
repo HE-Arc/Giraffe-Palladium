@@ -16,13 +16,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        // Get all items that are borrowable
-        $items = Item::where('listed', true)
-            ->whereDoesntHave('shares', function ($query) {
-                $query->where('terminated', false);
-            })
-            ->simplePaginate(20);
-
+        $items = Item::borrowable()->simplePaginate(20);
         return view('items.index', ['items' => $items]);
     }
 
