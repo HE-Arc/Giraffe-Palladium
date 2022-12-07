@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Share;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 
 class ItemController extends Controller
 {
-
+    /**
+     * Show the list of all borrowable items.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        // no-op
+        $items = Item::borrowable()->simplePaginate(20);
+        return view('items.index', ['items' => $items]);
     }
 
     /**
