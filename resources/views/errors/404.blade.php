@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    <img src="https://http.cat/404" alt="Un chat est caché sous un tas de feuilles de papier.">
+    <img src="https://http.cat/404" class="img-fluid" alt="Un chat est caché sous un tas de feuilles de papier.">
 @endsection
