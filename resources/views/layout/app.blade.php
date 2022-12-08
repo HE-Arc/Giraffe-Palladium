@@ -81,7 +81,7 @@
             </div>
         </nav>
     </header>
-    <main class="flex-shrink-0">
+    <main class="flex-shrink-0 mt-4">
         <div class="container">
             <h1>@yield('title')</h1>
             @yield('content')
