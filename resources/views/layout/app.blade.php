@@ -28,13 +28,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteNamed('users.index') ? 'active' : '' }}"
-                                aria-current="page" href="{{ route('users.index') }}">Liste des
-                                utilisateurs
+                                aria-current="page" href="{{ route('users.index') }}">Utilisateurs
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteNamed('items.index') ? 'active' : '' }}"
-                                aria-current="page" href="{{ route('items.index') }}">Liste des objets empruntables</a>
+                                aria-current="page" href="{{ route('items.index') }}">Objets empruntables</a>
                         </li>
                         @auth
                             <li class="nav-item">
