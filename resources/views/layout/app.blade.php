@@ -72,6 +72,10 @@
                                     class="nav-link  {{ Route::currentRouteNamed('auth.signup.create') ? 'active' : '' }}">Inscription</a>
                             </li>
                         @endguest
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteNamed('about') ? 'active' : '' }}"
+                                aria-current="page" href="{{ route('about') }}">À propos</a>
+                        </li>
                     </ul>
                 </div>
             </div>
