@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    <img src="https://http.cat/403" alt="Un chat tente de se rendre à Narnia en passant par les toilettes">
+    <img src="https://http.cat/403" class="img-fluid"  alt="Un chat tente de se rendre à Narnia en passant par les toilettes">
 @endsection
