@@ -9,6 +9,13 @@ class Share extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'borrower_id',
+        'lender_id',
+        'item_id',
+        'deadline',
+    ];
+
     protected $casts = [
         'deadline'  => 'datetime',
     ];

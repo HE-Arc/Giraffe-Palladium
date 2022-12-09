@@ -9,7 +9,6 @@
             <th scope="col">{{ $borrowView ? "Prêteur" : "Emprunteur"}}</th>
             <th scope="col">Date limite</th>
         </tr>
-        </tr>
     </thead>
     <tbody>
         @foreach ($shares as $share) {{-- type of : Share --}}

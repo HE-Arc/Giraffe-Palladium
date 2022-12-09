@@ -90,4 +90,16 @@ class UserController extends Controller
             'lends' => $lends,
         ]);
     }
+
+    public function asks(User $user)
+    {
+        $this->authorize('activeShare', $user);
+
+        // Get all items from the user that have at least one ask
+        $items = $user->items()->has('asks')->simplePaginate(10);
+        return view('users.asks', [
+            'user' => $user,
+            'items' => $items
+        ]);
+    }
 }

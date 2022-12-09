@@ -14,12 +14,14 @@ class IndexController extends Controller
         $user = auth()->user();
 
         if ($user){
+            $asks = $user->offers()->take($nbShow)->get();
             $lends = $user->lends()->orderby("deadline")->take($nbShow)->get();
             $borrows = $user->borrows()->orderby("deadline")->take($nbShow)->get();
         }
 
         return view('home',  [
             'user' => $user,
+            'asks' => $asks ?? null,
             'lends' => $lends ?? null,
             'borrows' => $borrows ?? null,
         ]);

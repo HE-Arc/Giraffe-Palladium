@@ -30,7 +30,7 @@ class AskPolicy
      */
     public function view(User $user, Ask $ask)
     {
-        //
+        return $user->id === $ask->lender()->id;
     }
 
     /**
@@ -66,6 +66,30 @@ class AskPolicy
     public function delete(User $user, Ask $ask)
     {
         return $ask->borrower_id === $user->id;
+    }
+
+    /**
+     * Determine whether the user can accept the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Ask  $ask
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function accept(User $user, Ask $ask)
+    {
+        return $user->id === $ask->lender()->id;
+    }
+
+    /**
+     * Determine whether the user can reject the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Ask  $ask
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function reject(User $user, Ask $ask)
+    {
+        return $user->id === $ask->lender()->id;
     }
 
     /**
