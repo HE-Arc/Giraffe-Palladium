@@ -27,4 +27,12 @@ class Share extends Model
     {
         return $this->belongsTo(Item::class, 'item_id');
     }
+
+    public function owner()
+    {
+        // It's easier to pass through the item to known if the share belongs to the user.
+        // else we need to check if we had an "nonuser_lender" and "nonuser_borrower"
+        //      to determine if this share belongs to the user
+        return $this->item->owner;
+    }
 }

@@ -53,7 +53,7 @@ class SharePolicy
      */
     public function update(User $user, Share $share)
     {
-        //
+        return $user->id === $share->owner()->id;
     }
 
     /**

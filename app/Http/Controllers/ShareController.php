@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Share;
 use App\Http\Requests\StoreShareRequest;
 use App\Http\Requests\UpdateShareRequest;
@@ -58,7 +59,11 @@ class ShareController extends Controller
      */
     public function edit(Share $share)
     {
-        //
+        $this->authorize('update', $share);
+        return view('shares.edit', [
+            'share' => $share,
+            'users' => User::all(),
+        ]);
     }
 
     /**
@@ -70,7 +75,12 @@ class ShareController extends Controller
      */
     public function update(UpdateShareRequest $request, Share $share)
     {
-        //
+        $this->authorize('update', $share);
+        $validated = $request->validated();
+        $share->update([
+
+        ]);
+        return redirect()->route('home');
     }
 
     /**
