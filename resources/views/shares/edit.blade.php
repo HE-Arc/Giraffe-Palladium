@@ -34,18 +34,24 @@
 
                     <label for="imBorrower" class="form-check-label">J'ai emprunter l'objet</label>
                     <input class="form-check-input" type="checkbox" id="imBorrower" name="imBorrower" value="active"
-                        @checked(old('imBorrower')) data-bs-toggle="collapse" data-bs-target="#alertImBorrower" />
+                        @checked(old('imBorrower', $imBorrower)) data-bs-toggle="collapse"
+                        data-bs-target="#alertImBorrower, #otherUserLabelBorrower, #otherUserLabelLender" />
 
                     <br> {{-- Without it, when div collapsed, there is an issue with line separation --}}
-                    <div id="alertImBorrower" class="alert alert-warning collapse {{ old('imBorrower') ? 'show' : '' }}"
+                    <div id="alertImBorrower"
+                        class="alert alert-warning collapse {{ old('imBorrower', $imBorrower) ? 'show' : '' }}"
                         role="alert">
                         Dans ce mode, l'objet emprunter ne sera pas lié à un utilisateur existant.<br>
                         (Le nom ne peut donc pas commencer par &#64;)
                     </div>
 
 
-                    <label for="otherUser" id="otherUserLabel" class="form-label">Personne impliquée</label>
+                    <label for="otherUser" id="otherUserLabelBorrower"
+                        class="form-label collapse {{ old('imBorrower', $imBorrower) ? '' : 'show' }}">Emprunteur</label>
+                    <label for="otherUser" id="otherUserLabelLender"
+                        class="form-label collapse {{ old('imBorrower', $imBorrower) ? 'show' : '' }}">Prêteur</label>
                     <input class="form-control" list="dlOptionsOtherUser" id="otherUser" name="otherUser"
+                        value="{{ old('otherUser', $otherUserName) }}"
                         placeholder="Ecrivez pour rechercher... (@ pour un utilisateur inscrit)" required>
                     <datalist id="dlOptionsOtherUser">
                         @foreach ($users as $user)
@@ -59,8 +65,14 @@
                         value="{{ old('since', $share->since->format('Y-m-d')) }}">
                     {{-- date format is required to be Y-m-d to be setted as value programmatically --}}
                     <label for="deadline" class="form-label">Date de retour</label>
+                    @php
+                        $deadline = $share->deadline;
+                        if ($deadline) {
+                            $deadline = $deadline->format('Y-m-d');
+                        }
+                    @endphp
                     <input id="deadline" class="form-control" name="deadline" type="date"
-                        value="{{ old('deadline', $share->deadline->format('Y-m-d')) }}" autofocus>
+                        value="{{ old('deadline', $deadline) }}">
 
                     <hr>
 

@@ -60,10 +60,20 @@ class ShareController extends Controller
     public function edit(Share $share)
     {
         $this->authorize('update', $share);
+
+        $imBorrower = $share->borrower_id === auth()->id();
+        $otherUserName = $imBorrower ? $share->nonuser_lender : $share->nonuser_borrower;
+        if (!$otherUserName) {
+            $otherUserName = "@" . $share->borrower->name;
+            // Add "@" for the logic referencement of existing user of the page
+        }
+
         return view('shares.edit', [
             'share' => $share,
             'users' => User::all(),
             'items' => auth()->user()->items()->get(),
+            'imBorrower' => $imBorrower,
+            'otherUserName' => $otherUserName,
         ]);
     }
 

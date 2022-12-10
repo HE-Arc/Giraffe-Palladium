@@ -49,15 +49,22 @@ class UpdateShareRequest extends FormRequest
             $noFailExistingUser = null;
         }
 
+        $imBorrower = array_key_exists('imBorrower', $this->all());
+
+        $noFailUseExistingUserWhenBorrower = true; // Used to trigger the validation error if required
+        if ($imBorrower && $isExistingUser) {
+            $noFailUseExistingUserWhenBorrower = null;
+        }
 
         $this->merge([
-            'imBorrower' => array_key_exists('imBorrower', $this->all()),
+            'imBorrower' => $imBorrower,
             'terminated' => array_key_exists('terminated', $this->all()),
             'isExistingUser' => $isExistingUser,
             'existingUser' => $existingUser,
             'otherUserName' => $otherUserName,
             'noFailExistingUser' => $noFailExistingUser,
             'noFailMissingUser' => $noFailMissingUser,
+            'noFailUseExistingUserWhenBorrower' => $noFailUseExistingUserWhenBorrower,
         ]);
     }
 
@@ -79,6 +86,7 @@ class UpdateShareRequest extends FormRequest
             'otherUserName' => ['nullable', 'string', 'max:255'],
             'noFailExistingUser' => ['required', 'boolean'],
             'noFailMissingUser' => ['required', 'boolean'],
+            'noFailUseExistingUserWhenBorrower' => ['required', 'boolean'],
         ];
     }
 
@@ -100,6 +108,7 @@ class UpdateShareRequest extends FormRequest
             'deadline.date' => "La date de fin  n'est pas valide",
             'noFailExistingUser' => "Le nom saisi ne correspond à aucun utilisateur.",
             'noFailMissingUser' => "Le nom de la personne est requis.",
+            'noFailUseExistingUserWhenBorrower' => "Vous ne pouvez pas sélectionner un utilisateur existant lorsque vous êtes emprunteur.",
         ];
     }
 }
