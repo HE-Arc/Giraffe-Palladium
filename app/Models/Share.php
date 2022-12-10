@@ -17,6 +17,7 @@ class Share extends Model
         'nonuser_borrower',
         'since',
         'deadline',
+        'terminated',
     ];
 
     protected $casts = [

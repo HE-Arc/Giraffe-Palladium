@@ -116,8 +116,9 @@ class ShareController extends Controller
             'nonuser_borrower' => $nonuser_borrower,
             'since' => $validated['since'],
             'deadline' => $validated['deadline'],
-            'terminated' => filter_var($validated['imBorrower'], FILTER_VALIDATE_BOOLEAN),
+            'terminated' => filter_var($validated['terminated'], FILTER_VALIDATE_BOOLEAN),
         ]);
+
         return redirect()->route('home');
     }
 
