@@ -63,6 +63,7 @@ class ShareController extends Controller
         return view('shares.edit', [
             'share' => $share,
             'users' => User::all(),
+            'items' => auth()->user()->items()->get(),
         ]);
     }
 
@@ -76,9 +77,28 @@ class ShareController extends Controller
     public function update(UpdateShareRequest $request, Share $share)
     {
         $this->authorize('update', $share);
-        $validated = $request->validated();
-        $share->update([
 
+
+        $validated = $request->validated();
+        // todo : add validation if item id is really owned by user
+        // todo : add validation for "existing users" and "nonuser"
+
+        $otherUser = $validated['otherUser'];
+
+        $lenderId = auth()->id();
+        $nonuser_lender = null;
+        $borrowerId = User::where('name', $otherUser)->first()->id ?? null;
+        $nonuser_borrower = $borrowerId ? null : $otherUser;
+
+        $share->update([
+            'item_id' => $validated['item'],
+            'lender_id' => $lenderId,
+            'nonuser_lender' => $nonuser_lender,
+            'borrower_id' => $borrowerId,
+            'nonuser_borrower' => $nonuser_borrower,
+            'since' => $validated['since'],
+            'deadline' => $validated['deadline'],
+            'terminated' => array_key_exists('terminated', $validated),
         ]);
         return redirect()->route('home');
     }
