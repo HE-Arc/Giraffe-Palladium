@@ -90,8 +90,6 @@ class ShareController extends Controller
 
         $validated = $request->validated();
 
-        // TODO : add validation if item id is really owned by user (didn't know how to do it properly (cause not passed in the form))
-
         $imBorrower = filter_var($validated['imBorrower'], FILTER_VALIDATE_BOOLEAN);
         $existingUser = $validated['existingUser'];
         $otherUserName = $validated['otherUserName'];
