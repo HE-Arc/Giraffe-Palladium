@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UpdateShareRequest extends FormRequest
 {
@@ -18,6 +19,49 @@ class UpdateShareRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $noFailMissingUser = true; // Used to trigger the validation error if required
+
+        if (!$this->otherUser) // Can happend if the user field isn't required (edited in the DOM)
+        {
+            $noFailMissingUser = null;
+            $isExistingUser = false;
+            $otherUserName = null;
+        } else {
+            $isExistingUser = $this->otherUser[0] === '@';
+            $otherUserName = $this->otherUser;
+        }
+
+
+        $existingUser = null;
+        if ($isExistingUser) {
+            $otherUserName = substr($otherUserName, 1);
+            $existingUser = User::where('name', $otherUserName)->first();
+        }
+
+        $noFailExistingUser = true; // Used to trigger the validation error if required
+        if ($isExistingUser && !$existingUser) {
+            $noFailExistingUser = null;
+        }
+
+
+        $this->merge([
+            'imBorrower' => array_key_exists('imBorrower', $this->all()),
+            'terminated' => array_key_exists('terminated', $this->all()),
+            'isExistingUser' => $isExistingUser,
+            'existingUser' => $existingUser,
+            'otherUserName' => $otherUserName,
+            'noFailExistingUser' => $noFailExistingUser,
+            'noFailMissingUser' => $noFailMissingUser,
+        ]);
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
@@ -25,10 +69,16 @@ class UpdateShareRequest extends FormRequest
     public function rules()
     {
         return [
-            'item' => ['required', 'exists:items,id'],
-            'otherUser' => ['required', 'string', 'max:255'],
+            // 'item' => ['required', 'exists:items,id'], // disabled because select isn't enabled
+            'imBorrower' => ['required', 'boolean'],
             'since' => ['required', 'date'],
             'deadline' => ['nullable', 'date'],
+            'terminated' => ['required', 'boolean'],
+            'isExistingUser' => ['boolean'],
+            'existingUser' => ['nullable'],
+            'otherUserName' => ['nullable', 'string', 'max:255'],
+            'noFailExistingUser' => ['required', 'boolean'],
+            'noFailMissingUser' => ['required', 'boolean'],
         ];
     }
 
@@ -43,12 +93,13 @@ class UpdateShareRequest extends FormRequest
             'item.required' => "L'objet est requis.",
             'item.string' => "L'objet doit être une chaîne de caractères.",
             'item.exists' => "L'objet n'existe pas.",
-            'otherUser.required' => "Le nom de la personne est requis.",
-            'otherUser.string' => "Le nom de la personne doit être une chaîne de caractères.",
-            'otherUser.max' => "Le nom pour la personne est trop long.",
+            'otherUserName.string' => "Le nom de la personne doit être une chaîne de caractères.",
+            'otherUserName.max' => "Le nom pour la personne est trop long.",
             'since.required' => "La date de début est requise.",
             'since.date' => "La date de début n'est pas valide",
             'deadline.date' => "La date de fin  n'est pas valide",
+            'noFailExistingUser' => "Le nom saisi ne correspond à aucun utilisateur.",
+            'noFailMissingUser' => "Le nom de la personne est requis.",
         ];
     }
 }

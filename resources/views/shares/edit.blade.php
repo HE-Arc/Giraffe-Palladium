@@ -1,3 +1,5 @@
+{{-- &#64; == @ --}}
+
 @extends('layout.app')
 
 @section('title')
@@ -21,21 +23,33 @@
             <div class="mb-3">
                 <div class="mb-3">
                     <label for="item" class="form-label">Objet emprunté</label>
-                    <select class="form-control" id="item" name="item" required>
+                    <select class="form-select" id="item" name="item" required disabled>
+                        {{-- disabled because item can't be changed to avoid edges problems (disabled --> validation check & controller removed) --}}
                         @foreach ($items as $item)
-                            <option value="{{ $item->id }}" @selected(old('item', $share->item_id) == $item->id)>{{ $item->title }}
-                            </option>
+                            <option value="{{ $item->id }}" @selected(old('item', $share->item_id) == $item->id)>{{ $item->title }}</option>
                         @endforeach
                     </select>
 
                     <hr>
 
-                    <label for="otherUser" class="form-label">Emprunteur</label>
+                    <label for="imBorrower" class="form-check-label">J'ai emprunter l'objet</label>
+                    <input class="form-check-input" type="checkbox" id="imBorrower" name="imBorrower" value="active"
+                        @checked(old('imBorrower')) data-bs-toggle="collapse" data-bs-target="#alertImBorrower" />
+
+                    <br> {{-- Without it, when div collapsed, there is an issue with line separation --}}
+                    <div id="alertImBorrower" class="alert alert-warning collapse {{ old('imBorrower') ? 'show' : '' }}"
+                        role="alert">
+                        Dans ce mode, l'objet emprunter ne sera pas lié à un utilisateur existant.<br>
+                        (Le nom ne peut donc pas commencer par &#64;)
+                    </div>
+
+
+                    <label for="otherUser" id="otherUserLabel" class="form-label">Personne impliquée</label>
                     <input class="form-control" list="dlOptionsOtherUser" id="otherUser" name="otherUser"
-                        placeholder="Ecrivez pour rechercher..." required>
+                        placeholder="Ecrivez pour rechercher... (@ pour un utilisateur inscrit)" required>
                     <datalist id="dlOptionsOtherUser">
                         @foreach ($users as $user)
-                            <option value="{{ $user->name }}" data-value="{{ $user->id }}">Utilisateur existant</option>
+                            <option value="&#64;{{ $user->name }}">{{ $user->email }} </option>
                         @endforeach
                     </datalist>
 
@@ -50,9 +64,9 @@
 
                     <hr>
 
-                    <label for="terminated" class="form-label">L'objet a été retourné </label>
-                    <input type="checkbox" id="terminated" name="terminated" value="active" @checked(old('terminated', $share->terminated))
-                        data-bs-toggle="collapse" data-bs-target="#alertTerminated" />
+                    <label for="terminated" class="form-check-label">L'objet a été retourné </label>
+                    <input class="form-check-input" type="checkbox" id="terminated" name="terminated" value="active"
+                        @checked(old('terminated', $share->terminated)) data-bs-toggle="collapse" data-bs-target="#alertTerminated" />
 
                     <div id="alertTerminated"
                         class="alert alert-warning collapse {{ old('terminated', $share->terminated) ? 'show' : '' }}"

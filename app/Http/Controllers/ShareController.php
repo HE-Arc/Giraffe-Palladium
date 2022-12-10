@@ -78,27 +78,35 @@ class ShareController extends Controller
     {
         $this->authorize('update', $share);
 
-
         $validated = $request->validated();
-        // todo : add validation if item id is really owned by user
-        // todo : add validation for "existing users" and "nonuser"
 
-        $otherUser = $validated['otherUser'];
+        // TODO : add validation if item id is really owned by user (didn't know how to do it properly (cause not passed in the form))
 
-        $lenderId = auth()->id();
-        $nonuser_lender = null;
-        $borrowerId = User::where('name', $otherUser)->first()->id ?? null;
-        $nonuser_borrower = $borrowerId ? null : $otherUser;
+        $imBorrower = filter_var($validated['imBorrower'], FILTER_VALIDATE_BOOLEAN);
+        $existingUser = $validated['existingUser'];
+        $otherUserName = $validated['otherUserName'];
+
+        if ($imBorrower) {
+            $lenderId = null;
+            $nonuser_lender = $otherUserName;
+            $borrowerId = auth()->id();
+            $nonuser_borrower = null;
+        } else {
+            $lenderId = auth()->id();
+            $nonuser_lender = null;
+            $borrowerId = $existingUser ? $existingUser->id : null;
+            $nonuser_borrower = $borrowerId ? null : $otherUserName;
+        }
 
         $share->update([
-            'item_id' => $validated['item'],
+            // 'item_id' => $validated['item'], // element was disabled in form
             'lender_id' => $lenderId,
             'nonuser_lender' => $nonuser_lender,
             'borrower_id' => $borrowerId,
             'nonuser_borrower' => $nonuser_borrower,
             'since' => $validated['since'],
             'deadline' => $validated['deadline'],
-            'terminated' => array_key_exists('terminated', $validated),
+            'terminated' => filter_var($validated['imBorrower'], FILTER_VALIDATE_BOOLEAN),
         ]);
         return redirect()->route('home');
     }
