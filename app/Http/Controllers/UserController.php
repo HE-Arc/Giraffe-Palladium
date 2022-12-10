@@ -73,7 +73,7 @@ class UserController extends Controller
     {
         $this->authorize('activeShare', $user);
 
-        $borrows = $user->borrows()->orderby("deadline")->simplePaginate(10);
+        $borrows = $user->borrows()->orderbyRaw("-deadline DESC")->simplePaginate(10);
         return view('users.borrows', [
             'user' => $user,
             'borrows' => $borrows,
@@ -84,7 +84,7 @@ class UserController extends Controller
     {
         $this->authorize('activeShare', $user);
 
-        $lends = $user->lends()->orderby("deadline")->simplePaginate(10);
+        $lends = $user->lends()->orderbyRaw("-deadline DESC")->simplePaginate(10);
         return view('users.lends', [
             'user' => $user,
             'lends' => $lends,

@@ -14,8 +14,8 @@ class IndexController extends Controller
         $user = auth()->user();
 
         if ($user){
-            $lends = $user->lends()->orderby("deadline")->take($nbShow)->get();
-            $borrows = $user->borrows()->orderby("deadline")->take($nbShow)->get();
+            $lends = $user->lends()->orderbyRaw("-deadline DESC")->take($nbShow)->get();
+            $borrows = $user->borrows()->orderbyRaw("-deadline DESC")->take($nbShow)->get();
         }
 
         return view('home',  [
