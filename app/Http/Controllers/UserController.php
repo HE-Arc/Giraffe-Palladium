@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Models\Item;
 
 class UserController extends Controller
 {
@@ -25,10 +26,16 @@ class UserController extends Controller
     public function show(User $user)
     {
         $isMe = $user->id === auth()->id();
+        $items = $user->items()->get();
+        if (!$isMe)
+        {
+            $items = Item::borrowable($user)->get();
+        }
+
         return view('users.show', [
             'user' => $user,
             'isMe' => $isMe,
-            'items' => $user->items()->get(),
+            'items' => $items,
         ]);
     }
 
