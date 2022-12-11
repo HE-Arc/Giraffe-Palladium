@@ -64,8 +64,8 @@ class ShareController extends Controller
         $imBorrower = $share->borrower_id === auth()->id();
         $otherUserName = $imBorrower ? $share->nonuser_lender : $share->nonuser_borrower;
         if (!$otherUserName) {
-            $otherUserName = "@" . $share->borrower->name;
             // Add "@" for the logic referencement of existing user of the page
+            $otherUserName = "@" . $share->borrower->name;
         }
 
         return view('shares.edit', [
@@ -90,7 +90,7 @@ class ShareController extends Controller
 
         $validated = $request->validated();
 
-        $imBorrower = filter_var($validated['imBorrower'], FILTER_VALIDATE_BOOLEAN);
+        $imBorrower = $validated['imBorrower'];
         $existingUser = $validated['existingUser'];
         $otherUserName = $validated['otherUserName'];
 
@@ -107,14 +107,13 @@ class ShareController extends Controller
         }
 
         $share->update([
-            // 'item_id' => $validated['item'], // element was disabled in form
             'lender_id' => $lenderId,
             'nonuser_lender' => $nonuser_lender,
             'borrower_id' => $borrowerId,
             'nonuser_borrower' => $nonuser_borrower,
             'since' => $validated['since'],
             'deadline' => $validated['deadline'],
-            'terminated' => filter_var($validated['terminated'], FILTER_VALIDATE_BOOLEAN),
+            'terminated' => $validated['terminated'],
         ]);
 
         return redirect()->route('home');

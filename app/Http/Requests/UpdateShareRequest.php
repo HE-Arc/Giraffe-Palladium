@@ -25,10 +25,15 @@ class UpdateShareRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $noFailMissingUser = true; // Used to trigger the validation error if required
+        // Vars used to trigger the validation error if required (will be null if there is an error)
+        $noFailMissingUser = true;
+        $noFailExistingUser = true;
+        $noFailUseExistingUserWhenBorrower = true;
 
-        if (!$this->otherUser) // Can happend if the user field isn't required (edited in the DOM)
-        {
+        // Validations
+
+        // Can happend if the user field isn't required (edited in the DOM)
+        if (!$this->otherUser) {
             $noFailMissingUser = null;
             $isExistingUser = false;
             $otherUserName = null;
@@ -44,14 +49,12 @@ class UpdateShareRequest extends FormRequest
             $existingUser = User::where('name', $otherUserName)->first();
         }
 
-        $noFailExistingUser = true; // Used to trigger the validation error if required
         if ($isExistingUser && !$existingUser) {
             $noFailExistingUser = null;
         }
 
         $imBorrower = array_key_exists('imBorrower', $this->all());
 
-        $noFailUseExistingUserWhenBorrower = true; // Used to trigger the validation error if required
         if ($imBorrower && $isExistingUser) {
             $noFailUseExistingUserWhenBorrower = null;
         }
@@ -76,7 +79,6 @@ class UpdateShareRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'item' => ['required', 'exists:items,id'], // disabled because select isn't enabled
             'imBorrower' => ['required', 'boolean'],
             'since' => ['required', 'date'],
             'deadline' => ['nullable', 'date'],

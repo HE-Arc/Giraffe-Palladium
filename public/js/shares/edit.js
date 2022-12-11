@@ -4,7 +4,7 @@ const userInput = document.getElementById('otherUser');
 const deadlineInput = document.getElementById('deadline');
 
 function setColorUserInput() {
-    const classColor = 'text-primary'; // Bootstrap class for text color
+    const classColor = 'text-primary';
     if (userInput.value[0] === '@') {
         userInput.classList.add(classColor);
     }else{
@@ -13,8 +13,8 @@ function setColorUserInput() {
 }
 
 function setColorDeadlineInput() {
-    const classColor = 'text-danger'; // Bootstrap class for text color
-    // if deadline passed
+    const classColor = 'text-danger';
+
     if (deadlineInput.value != "" && deadlineInput.value < new Date().toISOString().split('T')[0]) {
         deadlineInput.classList.add(classColor);
     }else{
@@ -27,4 +27,3 @@ setColorDeadlineInput();
 
 userInput.onkeyup = function(){setColorUserInput()};
 setColorUserInput();
-

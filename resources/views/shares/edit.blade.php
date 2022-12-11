@@ -24,7 +24,7 @@
                 <div class="mb-3">
                     <label for="item" class="form-label">Objet emprunté</label>
                     <select class="form-select" id="item" name="item" required disabled>
-                        {{-- disabled because item can't be changed to avoid edges problems (disabled --> validation check & controller removed) --}}
+                        {{-- disabled because item can't be changed to avoid edges problems --}}
                         @foreach ($items as $item)
                             <option value="{{ $item->id }}" @selected(old('item', $share->item_id) == $item->id)>{{ $item->title }}</option>
                         @endforeach
@@ -32,7 +32,7 @@
 
                     <hr>
 
-                    <label for="imBorrower" class="form-check-label">J'ai emprunter l'objet</label>
+                    <label for="imBorrower" class="form-check-label">J'ai emprunté l'objet</label>
                     <input class="form-check-input" type="checkbox" id="imBorrower" name="imBorrower" value="active"
                         @checked(old('imBorrower', $imBorrower)) data-bs-toggle="collapse"
                         data-bs-target="#alertImBorrower, #otherUserLabelBorrower, #otherUserLabelLender" />
@@ -41,7 +41,7 @@
                     <div id="alertImBorrower"
                         class="alert alert-warning collapse {{ old('imBorrower', $imBorrower) ? 'show' : '' }}"
                         role="alert">
-                        Dans ce mode, l'objet emprunter ne sera pas lié à un utilisateur existant.<br>
+                        Dans ce mode, l'objet emprunté ne sera pas lié à un utilisateur existant.<br>
                         (Le nom ne peut donc pas commencer par &#64;)
                     </div>
 
@@ -83,7 +83,7 @@
                     <div id="alertTerminated"
                         class="alert alert-warning collapse {{ old('terminated', $share->terminated) ? 'show' : '' }}"
                         role="alert">
-                        Dans la version actuelle du site, un prêt noté comme retourné n'est plus accessible et donc ne peut
+                        Dans la version actuelle du site, un prêt retourné n'est plus accessible et donc ne peut
                         plus être modifié.
                     </div>
                 </div>

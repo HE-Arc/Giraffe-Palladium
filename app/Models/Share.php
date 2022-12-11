@@ -10,7 +10,6 @@ class Share extends Model
     use HasFactory;
 
     protected $fillable = [
-        'item_id',
         'lender_id',
         'borrower_id',
         'nonuser_lender',
