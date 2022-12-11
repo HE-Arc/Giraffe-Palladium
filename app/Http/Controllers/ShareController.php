@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Share;
 use App\Http\Requests\StoreShareRequest;
 use App\Http\Requests\UpdateShareRequest;
@@ -58,7 +59,22 @@ class ShareController extends Controller
      */
     public function edit(Share $share)
     {
-        //
+        $this->authorize('update', $share);
+
+        $imBorrower = $share->borrower_id === auth()->id();
+        $otherUserName = $imBorrower ? $share->nonuser_lender : $share->nonuser_borrower;
+        if (!$otherUserName) {
+            // Add "@" for the logic referencement of existing user of the page
+            $otherUserName = "@" . $share->borrower->name;
+        }
+
+        return view('shares.edit', [
+            'share' => $share,
+            'users' => User::all(),
+            'items' => auth()->user()->items()->get(),
+            'imBorrower' => $imBorrower,
+            'otherUserName' => $otherUserName,
+        ]);
     }
 
     /**
@@ -70,7 +86,37 @@ class ShareController extends Controller
      */
     public function update(UpdateShareRequest $request, Share $share)
     {
-        //
+        $this->authorize('update', $share);
+
+        $validated = $request->validated();
+
+        $imBorrower = $validated['imBorrower'];
+        $existingUser = $validated['existingUser'];
+        $otherUserName = $validated['otherUserName'];
+
+        if ($imBorrower) {
+            $lenderId = null;
+            $nonuser_lender = $otherUserName;
+            $borrowerId = auth()->id();
+            $nonuser_borrower = null;
+        } else {
+            $lenderId = auth()->id();
+            $nonuser_lender = null;
+            $borrowerId = $existingUser ? $existingUser->id : null;
+            $nonuser_borrower = $borrowerId ? null : $otherUserName;
+        }
+
+        $share->update([
+            'lender_id' => $lenderId,
+            'nonuser_lender' => $nonuser_lender,
+            'borrower_id' => $borrowerId,
+            'nonuser_borrower' => $nonuser_borrower,
+            'since' => $validated['since'],
+            'deadline' => $validated['deadline'],
+            'terminated' => $validated['terminated'],
+        ]);
+
+        return redirect()->route('home');
     }
 
     /**

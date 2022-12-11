@@ -7,6 +7,7 @@ use App\Http\Controllers\AskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ShareController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +54,7 @@ Route::post('/signin', [AuthController::class, 'connect'])->name('auth.signin.co
 Route::get('/signup', [AuthController::class, 'create'])->middleware('guest')->name('auth.signup.create');
 Route::post('/signup', [AuthController::class, 'store'])->name('auth.signup.store');
 Route::get('/signout', [AuthController::class, 'disconnect'])->name('auth.signout.disconnect');
+
+// ShareController
+Route::get('/shares/{share}/edit', [ShareController::class, 'edit'])->name('shares.edit');
+Route::put('/shares/{share}', [ShareController::class, 'update'])->name('shares.update');
