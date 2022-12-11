@@ -39,7 +39,7 @@ class AcceptAskRequest extends FormRequest
     public function messages()
     {
         return [
-            'deadline.date' => 'Please enter a valid date',
+            'deadline.date' => 'Veuillez entrer une date valide',
         ];
     }
 }
