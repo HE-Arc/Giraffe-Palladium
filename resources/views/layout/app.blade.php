@@ -28,13 +28,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteNamed('users.index') ? 'active' : '' }}"
-                                aria-current="page" href="{{ route('users.index') }}">Liste des
-                                utilisateurs
+                                aria-current="page" href="{{ route('users.index') }}">Utilisateurs
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteNamed('items.index') ? 'active' : '' }}"
-                                aria-current="page" href="{{ route('items.index') }}">Liste des objets empruntables</a>
+                                aria-current="page" href="{{ route('items.index') }}">Objets empruntables</a>
                         </li>
                         @auth
                             <li class="nav-item">
@@ -72,12 +71,16 @@
                                     class="nav-link  {{ Route::currentRouteNamed('auth.signup.create') ? 'active' : '' }}">Inscription</a>
                             </li>
                         @endguest
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteNamed('about') ? 'active' : '' }}"
+                                aria-current="page" href="{{ route('about') }}">À propos</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <main class="flex-shrink-0">
+    <main class="flex-shrink-0 mt-4">
         <div class="container">
             <h1>@yield('title')</h1>
             @yield('content')
@@ -98,6 +101,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
+
+    @yield('js')
 </body>
 
 </html>

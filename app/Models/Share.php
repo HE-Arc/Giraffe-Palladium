@@ -10,14 +10,18 @@ class Share extends Model
     use HasFactory;
 
     protected $fillable = [
-        'borrower_id',
         'lender_id',
-        'item_id',
+        'borrower_id',
+        'nonuser_lender',
+        'nonuser_borrower',
+        'since',
         'deadline',
+        'terminated',
     ];
 
     protected $casts = [
-        'deadline'  => 'datetime',
+        'since'  => 'datetime',
+        'deadline' => 'datetime',
     ];
 
     public function borrower()
@@ -33,5 +37,13 @@ class Share extends Model
     public function item()
     {
         return $this->belongsTo(Item::class, 'item_id');
+    }
+
+    public function owner()
+    {
+        // It's easier to pass through the item to known if the share belongs to the user.
+        // else we need to check if we had an "nonuser_lender" and "nonuser_borrower"
+        //      to determine if this share belongs to the user
+        return $this->item->owner;
     }
 }

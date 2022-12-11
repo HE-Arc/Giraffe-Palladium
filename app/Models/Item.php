@@ -32,10 +32,21 @@ class Item extends Model
 
     /**
      * Get all borrowable items.
+     *
+     * @param  \App\Models\User  $owner if not null, get all borrowable elements of this owner
      */
-    public static function borrowable()
+    public static function borrowable($owner = null)
     {
-        return Item::where('listed', true)
+        $where = [
+            'listed' => true,
+        ];
+        if ($owner)
+        {
+            $where['owner_id'] = $owner->id;
+        }
+
+
+        return Item::where($where)
             ->whereDoesntHave('shares', function ($query) {
                 $query->where('terminated', false);
             });

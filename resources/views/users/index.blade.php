@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    Liste des utilisateurs
+    Utilisateurs
 @endsection
 
 @section('content')
