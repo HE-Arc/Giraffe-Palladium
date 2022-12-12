@@ -17,9 +17,12 @@
             <tbody>
                 {{-- type of : Item --}}
                 @foreach ($items as $item)
-                    <tr>
-                        <td><a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a></td>
-                        <td><a href="{{ route('users.show', $item->owner->id) }}">{{ $item->owner->name }}</a></td>
+                    <tr class="align-middle">
+                        <td><a href="{{ route('items.show', $item->id) }}" class="link-dark">{{ $item->title }}</a></td>
+                        <td>
+                            <a href="{{ route('users.show', $item->owner->id) }}"
+                                class="link-dark">{{ $item->owner->name }}</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
