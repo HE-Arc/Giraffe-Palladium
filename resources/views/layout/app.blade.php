@@ -55,6 +55,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a
+                                    class="nav-link {{ Route::currentRouteNamed('users.asks') ? 'active' : '' }}"aria-current="page"href="{{ route('users.asks', Auth::user()->id) }}">
+                                    Demandes d'emprunt
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteNamed('auth.signout.disconnect') ? 'active' : '' }}"
                                     aria-current="page" href="{{ route('auth.signout.disconnect') }}">
                                     Déconnexion

@@ -1,6 +1,5 @@
 {{-- Variables :
-    $borrowView (boolean),
-    $share (App\Models\Share)
+    $ask (App\Models\Ask)
 --}}
 <table class="table">
     <thead>
@@ -27,4 +26,3 @@
         @endforeach
     </tbody>
 </table>
-
