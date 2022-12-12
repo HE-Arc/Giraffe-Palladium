@@ -23,7 +23,7 @@
                 </a>
             </li>
             @if ($user->offers()->count() > 0)
-                <x-asks :asks="$asks" />
+                <x-asks :showItem="true" :asks="$asks" />
             @endif
 
             <li class="my-2 list-group-item list-group-item-info rounded-4">
