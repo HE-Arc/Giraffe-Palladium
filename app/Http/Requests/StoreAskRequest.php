@@ -39,8 +39,8 @@ class StoreAskRequest extends FormRequest
     public function messages()
     {
         return [
-            'item_id.required' => 'Please select an item',
-            'item_id.exists' => 'Please select a valid item'
+            'item_id.required' => 'Veuillez sélectionner un objet',
+            'item_id.exists' => 'Veuillez sélectionner un objet valide'
         ];
     }
 }
