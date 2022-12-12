@@ -21,7 +21,7 @@
     </td>
     <td>
         @if ($editLink)
-            <a href="{{ $editLink }}" class="btn btn-primary">Modifier</a>
+            <a href="{{ $editLink }}" class="btn btn-primary bi bi-pencil"></a>
         @endif
     </td>
 </tr>
