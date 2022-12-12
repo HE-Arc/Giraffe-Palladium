@@ -56,9 +56,20 @@ class User extends Authenticatable
         return $this->hasMany(Item::class, 'owner_id');
     }
 
+    /**
+     * Requests made by this user to borrow items.
+     */
     public function asks()
     {
         return $this->hasMany(Ask::class, 'borrower_id');
+    }
+
+    /**
+     * Requests received by this user to lend items.
+     */
+    public function offers()
+    {
+        return $this->hasManyThrough(Ask::class, Item::class, 'owner_id', 'item_id');
     }
 
     public function borrows()

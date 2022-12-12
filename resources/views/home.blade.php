@@ -18,10 +18,11 @@
 
         <ul>
             <li>
-                <a href=""> {{-- TODO : redirect to the page when it is created (issue #5) --}}
-                    {{ $user->asks->count() }} demande(s) d'emprunt
+                <a href="{{ route('users.asks', Auth::user()->id) }}">
+                    {{ $user->offers()->count() }} demande(s) d'emprunt
                 </a>
             </li>
+            <x-asks :asks="$asks" />
             <li>
                 <a href="{{ route('users.lends', Auth::user()->id) }}"">
                     {{ $user->lends->count() }} prêt(s) en cours

@@ -34,10 +34,14 @@ Route::delete('/users/{user}', [UserController::class, 'delete'])->name('users.d
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::get('/users/{user}/borrows', [UserController::class, 'borrows'])->name('users.borrows');
 Route::get('/users/{user}/lends', [UserController::class, 'lends'])->name('users.lends');
+Route::get('/users/{user}/asks', [UserController::class, 'asks'])->name('users.asks');
 
 // AskController
 Route::post('/asks', [AskController::class, 'store'])->name('asks.store');
+Route::get('/asks/{ask}', [AskController::class, 'show'])->name('asks.show');
 Route::delete('/asks/{ask}', [AskController::class, 'destroy'])->name('asks.destroy');
+Route::post('/asks/{ask}/accept', [AskController::class, 'accept'])->name('asks.accept');
+Route::delete('/asks/{ask}/reject', [AskController::class, 'reject'])->name('asks.reject');
 
 // ItemsController
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');

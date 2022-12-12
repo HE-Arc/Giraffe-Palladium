@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAskRequest extends FormRequest
+class AcceptAskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class StoreAskRequest extends FormRequest
     public function rules()
     {
         return [
-            'item_id' => [
-                'required',
-                'exists:items,id',
-            ]
+            'deadline' => [
+                'nullable',
+                'date',
+            ],
         ];
     }
 
@@ -39,8 +39,7 @@ class StoreAskRequest extends FormRequest
     public function messages()
     {
         return [
-            'item_id.required' => 'Veuillez sélectionner un objet',
-            'item_id.exists' => 'Veuillez sélectionner un objet valide'
+            'deadline.date' => 'Veuillez entrer une date valide',
         ];
     }
 }

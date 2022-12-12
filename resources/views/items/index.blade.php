@@ -18,6 +18,7 @@
             <tr>
                 <td><a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a></td>
                 <td><a href="{{ route('users.show', $item->owner->id) }}">{{ $item->owner->name }}</a></td>
+            </tr>
         @endforeach
     </tbody>
 </table>

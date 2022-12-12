@@ -10,7 +10,6 @@
             <th scope="col">Date limite</th>
             <th></th> {{-- Edit button --}}
         </tr>
-        </tr>
     </thead>
     <tbody>
         @foreach ($shares as $share) {{-- type of : Share --}}
