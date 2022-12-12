@@ -5,24 +5,26 @@
 @endsection
 
 @section('content')
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Objet</th>
-            <th scope="col">Prêteur</th>
-        </tr>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($items as $item) {{-- type of : Item --}}
-            <tr>
-                <td><a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a></td>
-                <td><a href="{{ route('users.show', $item->owner->id) }}">{{ $item->owner->name }}</a></td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
-
+    <div class="table-responsive rounded-4 border border-gray">
+        <table class="mb-0 table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Objet</th>
+                    <th scope="col">Prêteur</th>
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+                {{-- type of : Item --}}
+                @foreach ($items as $item)
+                    <tr>
+                        <td><a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a></td>
+                        <td><a href="{{ route('users.show', $item->owner->id) }}">{{ $item->owner->name }}</a></td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
     <div class="d-flex">
         {{ $items->links() }}
     </div>
