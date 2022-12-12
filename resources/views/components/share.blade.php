@@ -1,20 +1,38 @@
 {{-- Variables :
-    $title (string),
-    $name (string),
+    $item (App\Models\Item),
+    $user (App\Models\User) || (string),
     $deadline (datetime)
     $editLink (string),
 --}}
 
-<tr>
+@php
+    $passedDateTextClass = '';
+    $passedDateBorderClass = '';
+
+    if ($deadline && $deadline->isToday()) {
+        $passedDateTextClass = '';
+        $passedDateBorderClass = 'table-warning';
+    } elseif ($deadline && $deadline->isPast()) {
+        $passedDateTextClass = 'text-danger';
+        $passedDateBorderClass = 'table-danger';
+    }
+
+@endphp
+
+<tr class="align-middle {{ $passedDateBorderClass }}">
     <td>
-        {{ $title }}
+        <a href="{{ route('items.show', $item->id) }}" class="link-dark">{{ $item->title }}</a>
     </td>
     <td>
-        {{ $name }}
+        @if ($user instanceof App\Models\User)
+            <a href="{{ route('users.show', $user->id) }}" class="link-dark">{{ $user->name }}</a>
+        @else
+            {{ $user }}
+        @endif
     </td>
-    <td>
+    <td class="{{ $passedDateTextClass }}">
         @if ($deadline)
-            {{ ($deadline)->format('d.m.Y') }}
+            {{ $deadline->format('d.m.Y') }}
         @else
             Pas de date limite
         @endif

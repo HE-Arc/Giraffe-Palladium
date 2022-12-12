@@ -15,9 +15,9 @@
         @foreach ($shares as $share) {{-- type of : Share --}}
             @php
                 if ($borrowView) {
-                    $name = $share->lender ? $share->lender->name : $share->nonuser_lender;
+                    $linkedUser = $share->lender ? $share->lender : $share->nonuser_lender;
                 } else {
-                    $name = $share->borrower ? $share->borrower->name : $share->nonuser_borrower;
+                    $linkedUser = $share->borrower ? $share->borrower : $share->nonuser_borrower;
                 }
 
                 $editLink = null;
@@ -27,8 +27,8 @@
             @endphp
 
             <x-share
-                :title="$share->item->title"
-                :name="$name"
+                :item="$share->item"
+                :user="$linkedUser"
                 :deadline="$share->deadline"
                 :editLink="$editLink" />
         @endforeach
