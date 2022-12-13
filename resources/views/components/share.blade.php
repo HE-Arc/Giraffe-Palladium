@@ -37,7 +37,7 @@
             Pas de date limite
         @endif
     </td>
-    <td>
+    <td class="text-end">
         @if ($editLink)
             <a href="{{ $editLink }}" class="btn btn-primary bi bi-pencil"></a>
         @endif

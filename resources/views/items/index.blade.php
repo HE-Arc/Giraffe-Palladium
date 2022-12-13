@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="table-responsive rounded-4 border border-gray">
+    <div class="table-responsive rounded-2 border border-gray">
         <table class="mb-0 table">
             <thead class="table-light">
                 <tr>
