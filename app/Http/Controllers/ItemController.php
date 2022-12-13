@@ -45,6 +45,7 @@ class ItemController extends Controller
             'owner_id' => auth()->id(),
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
+            'listed' => isset($validated['listed']),
         ]);
         return redirect()->route('items.show', $item->id);
     }

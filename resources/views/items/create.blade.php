@@ -26,6 +26,10 @@
                 <label for="description" class="form-label">Description</label>
                 <textarea id="description" class="form-control" name="description">{{ old('description') }}</textarea>
             </div>
+            <div class="mb-3">
+                <label for="listed" class="form-check-label">Lister l'objet comme empruntable</label>
+                <input id="listed" class="form-check-input" name="listed" type="checkbox" value="true" checked>
+            </div>
             <button type="submit" class="btn btn-primary">Créer un objet</button>
         </form>
     </div>
