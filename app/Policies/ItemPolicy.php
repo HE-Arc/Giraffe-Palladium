@@ -41,7 +41,7 @@ class ItemPolicy
      */
     public function create(User $user)
     {
-        return false;
+        return true;
     }
 
     /**
