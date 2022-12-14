@@ -95,6 +95,7 @@ class ItemController extends Controller
         $item->update([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
+            'listed' => isset($validated['listed']),
         ]);
         return redirect()->route('items.show', $item->id);
     }
