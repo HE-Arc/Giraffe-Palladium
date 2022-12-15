@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Share;
 use App\Models\Item;
-use App\Http\Requests\StoreShareRequest;
-use App\Http\Requests\UpdateShareRequest;
+use App\Http\Requests\StoreUpdateShareRequest;
 
 class ShareController extends Controller
 {
@@ -49,10 +48,10 @@ class ShareController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreShareRequest  $request
+     * @param  \App\Http\Requests\StoreUpdateShareRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreShareRequest $request)
+    public function store(StoreUpdateShareRequest $request)
     {
         $this->authorize('create', Share::class);
         $validated = $request->validated();
@@ -128,11 +127,11 @@ class ShareController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateShareRequest  $request
+     * @param  \App\Http\Requests\StoreUpdateShareRequest  $request
      * @param  \App\Models\Share  $share
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateShareRequest $request, Share $share)
+    public function update(StoreUpdateShareRequest $request, Share $share)
     {
         $this->authorize('update', $share);
 

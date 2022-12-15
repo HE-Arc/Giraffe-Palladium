@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
-class UpdateShareRequest extends FormRequest
+class StoreUpdateShareRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -79,6 +79,7 @@ class UpdateShareRequest extends FormRequest
     public function rules()
     {
         return [
+            'itemId' => ['required', 'integer', 'exists:items,id'],
             'imBorrower' => ['required', 'boolean'],
             'since' => ['required', 'date'],
             'deadline' => ['nullable', 'date'],
@@ -100,9 +101,9 @@ class UpdateShareRequest extends FormRequest
     public function messages()
     {
         return [
-            'item.required' => "L'objet est requis.",
-            'item.string' => "L'objet doit être une chaîne de caractères.",
-            'item.exists' => "L'objet n'existe pas.",
+            'itemId.required' => "L'objet est requis.",
+            'itemId.integer' => "L'ID de l'objet doit être un entier.",
+            'itemId.exists' => "L'objet n'existe pas.",
             'otherUserName.string' => "Le nom de la personne doit être une chaîne de caractères.",
             'otherUserName.max' => "Le nom pour la personne est trop long.",
             'since.required' => "La date de début est requise.",
