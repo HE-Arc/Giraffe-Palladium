@@ -37,11 +37,11 @@
             <button class="btn btn-danger bi bi-trash3" title="Delete"> Supprimer</button>
         </form>
 
+        <hr>
+
+        <h2 class="mt-3">Partages en cours</h2>
+
         @if ($isAlreadyShared)
-            <hr>
-
-            <h2 class="mt-3">Partages en cours</h2>
-
             <div class="table-responsive rounded-2 border border-gray">
                 <table class=" mb-0 table">
                     <thead class="table-light">
@@ -66,6 +66,11 @@
                     </tbody>
                 </table>
             </div>
+        @else
+            <p> Cet objet n'est pas partagé pour le moment. </p>
+            <form action="{{ route('shares.create', $item->id) }}" method="get" class="d-inline">
+                <button type="submit" class="btn btn-primary" title="Share">Ajouter un partage manuellement</button>
+            </form>
         @endif
     @else
         <p>

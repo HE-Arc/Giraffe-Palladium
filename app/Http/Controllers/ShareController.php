@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Share;
+use App\Models\Item;
 use App\Http\Requests\StoreShareRequest;
 use App\Http\Requests\UpdateShareRequest;
 
@@ -22,11 +23,27 @@ class ShareController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \App\Models\Item  $item The item to be shared
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Item $item)
     {
-        //
+        $this->authorize('create', Share::class);
+
+        $share = new Share();
+        $share->since = now();
+        $share->item()->associate($item);
+
+        return view(
+            'shares.create',
+            [
+                'share' => $share,
+                'users' => User::all(),
+                'items' => auth()->user()->items()->get(),
+                'imBorrower' => false,
+                'otherUserName' => "",
+            ]
+        );
     }
 
     /**
@@ -37,7 +54,38 @@ class ShareController extends Controller
      */
     public function store(StoreShareRequest $request)
     {
-        //
+        $this->authorize('create', Share::class);
+        $validated = $request->validated();
+
+        $itemId = $validated['itemId'];
+        $imBorrower = $validated['imBorrower'];
+        $existingUser = $validated['existingUser'];
+        $otherUserName = $validated['otherUserName'];
+
+        if ($imBorrower) {
+            $lenderId = null;
+            $nonuser_lender = $otherUserName;
+            $borrowerId = auth()->id();
+            $nonuser_borrower = null;
+        } else {
+            $lenderId = auth()->id();
+            $nonuser_lender = null;
+            $borrowerId = $existingUser ? $existingUser->id : null;
+            $nonuser_borrower = $borrowerId ? null : $otherUserName;
+        }
+
+        Share::create([
+            'item_id' => $itemId,
+            'lender_id' => $lenderId,
+            'nonuser_lender' => $nonuser_lender,
+            'borrower_id' => $borrowerId,
+            'nonuser_borrower' => $nonuser_borrower,
+            'since' => $validated['since'],
+            'deadline' => $validated['deadline'],
+            'terminated' => $validated['terminated'],
+        ]);
+
+        return redirect()->route('items.show', $itemId);
     }
 
     /**
