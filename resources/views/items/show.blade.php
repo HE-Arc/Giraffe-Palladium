@@ -7,7 +7,9 @@
 @section('content')
     <h2>{{ $item->title }}</h2>
     @if ($item->description)
-        <p class="alert alert-light border border-1">{{ $item->description }}</p>
+    <p class="alert alert-light border border-1">
+        <span style="white-space: pre-wrap">{{ $item->description }}</span>
+    </p>
     @endif
     @php
         $isAlreadyShared = $shares->count();
