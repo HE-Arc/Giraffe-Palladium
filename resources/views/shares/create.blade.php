@@ -19,12 +19,7 @@
         @endif
         <form action="{{ route('shares.store') }}" method="post" class="col-md-8 col-lg-6 col-xxl-4">
             @csrf
-            <div class="mb-3">
-                <div class="mb-3">
-                    <x-forms.share :share="$share" :items="$items" :imBorrower="$imBorrower" :otherUserName="$otherUserName"
-                        :users="$users" />
-                </div>
-            </div>
+            <x-forms.share :share="$share" :items="$items" :imBorrower="$imBorrower" :otherUserName="$otherUserName" :users="$users" />
             <button type="submit" class="btn btn-primary">Créer</button>
         </form>
     </div>

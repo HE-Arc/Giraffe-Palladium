@@ -20,12 +20,7 @@
         <form action="{{ route('shares.update', $share->id) }}" method="post" class="col-md-8 col-lg-6 col-xxl-4">
             @csrf
             @method('PUT')
-            <div class="mb-3">
-                <div class="mb-3">
-                    <x-forms.share :share="$share" :items="$items" :imBorrower="$imBorrower" :otherUserName="$otherUserName"
-                        :users="$users" />
-                </div>
-            </div>
+            <x-forms.share :share="$share" :items="$items" :imBorrower="$imBorrower" :otherUserName="$otherUserName" :users="$users" />
             <button type="submit" class="btn btn-primary">Modifier</button>
         </form>
     </div>
