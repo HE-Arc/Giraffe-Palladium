@@ -1,5 +1,5 @@
 {{-- Variables :
-    $item (App\Models\Item),
+    $item (App\Models\Item) || null (column will be removed),
     $user (App\Models\User) || (string),
     $deadline (datetime)
     $editLink (string),
@@ -20,9 +20,11 @@
 @endphp
 
 <tr class="align-middle {{ $passedDateBorderClass }}">
-    <td>
-        <a href="{{ route('items.show', $item->id) }}" class="link-dark">{{ $item->title }}</a>
-    </td>
+    @if ($item)
+        <td>
+            <a href="{{ route('items.show', $item->id) }}" class="link-dark">{{ $item->title }}</a>
+        </td>
+    @endif
     <td>
         @if ($user instanceof App\Models\User)
             <a href="{{ route('users.show', $user->id) }}" class="link-dark">{{ $user->name }}</a>
