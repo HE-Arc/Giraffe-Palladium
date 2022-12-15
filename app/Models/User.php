@@ -81,4 +81,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Share::class, 'lender_id')->where('terminated', false);
     }
+
+    /**
+     * Get the number of items this user allows to borrow.
+     */
+    public function getNumberBorrowableItems()
+    {
+        return Item::borrowable($this)->count();
+    }
 }
