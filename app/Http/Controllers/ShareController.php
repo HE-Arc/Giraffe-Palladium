@@ -37,7 +37,7 @@ class ShareController extends Controller
             'shares.create',
             [
                 'share' => $share,
-                'users' => User::all(),
+                'users' => User::all()->whereNotIn('id', auth()->id()),
                 'items' => auth()->user()->items()->get(),
                 'imBorrower' => false,
                 'otherUserName' => "",
@@ -117,7 +117,7 @@ class ShareController extends Controller
 
         return view('shares.edit', [
             'share' => $share,
-            'users' => User::all(),
+            'users' => User::all()->whereNotIn('id', auth()->id()),
             'items' => auth()->user()->items()->get(),
             'imBorrower' => $imBorrower,
             'otherUserName' => $otherUserName,
