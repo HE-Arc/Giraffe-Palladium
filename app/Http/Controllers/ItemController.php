@@ -60,7 +60,7 @@ class ItemController extends Controller
     {
         $isMine = optional(auth())->id() === $item->owner_id;
         $myAsk = auth()->guest() ? null : $item->asks()->where('borrower_id', auth()->id())->first();
-        $shares = $item->shares()->orderbyRaw("-deadline DESC")->get();
+        $shares = $item->shares()->whereNotIn('terminated', [true])->orderbyRaw("-deadline DESC")->get();
         return view('items.show', [
             'item' => $item,
             'isMine' => $isMine,
