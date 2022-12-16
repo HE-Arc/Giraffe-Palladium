@@ -12,13 +12,17 @@
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ url('images/logo.png') }}">
 </head>
 
 <body class="d-flex flex-column h-100">
     <header>
         <nav class="navbar navbar-expand-xl bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ route('home') }}">Giraffe Palladium</a>
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <img src="{{url('images/logo.png')}}" alt="Logo" height="30" class="d-inline-block align-text-top" />
+                    Giraffe Palladium
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">

@@ -14,7 +14,7 @@
     <a href="https://he-arc.ch/" target="_blank">
         <img
             src="images/logo-he-arc.svg"
-            alt="triangle with all three sides equal"
+            alt="HE-Arc logo"
             width="300"
         />
     </a>
