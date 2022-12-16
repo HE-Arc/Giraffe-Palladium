@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Site web</title>
+    <title>@yield('title') - Giraffe Palladium</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
@@ -39,26 +39,26 @@
                         </li>
                         @auth
                             <li class="nav-item">
-                                <a
-                                    class="nav-link {{ Route::currentRouteNamed('users.show') ? 'active' : '' }}"aria-current="page"href="{{ route('users.show', Auth::user()->id) }}">
+                                <a class="nav-link {{ Route::currentRouteNamed('users.show') ? 'active' : '' }}"
+                                    aria-current="page" href="{{ route('users.show', Auth::user()->id) }}">
                                     Mon profil
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a
-                                    class="nav-link {{ Route::currentRouteNamed('users.borrows') ? 'active' : '' }}"aria-current="page"href="{{ route('users.borrows', Auth::user()->id) }}">
+                                <a class="nav-link {{ Route::currentRouteNamed('users.borrows') ? 'active' : '' }}"
+                                    aria-current="page" href="{{ route('users.borrows', Auth::user()->id) }}">
                                     Mes emprunts
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a
-                                    class="nav-link {{ Route::currentRouteNamed('users.lends') ? 'active' : '' }}"aria-current="page"href="{{ route('users.lends', Auth::user()->id) }}">
+                                <a class="nav-link {{ Route::currentRouteNamed('users.lends') ? 'active' : '' }}"
+                                    aria-current="page" href="{{ route('users.lends', Auth::user()->id) }}">
                                     Mes prêts
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a
-                                    class="nav-link {{ Route::currentRouteNamed('users.asks') ? 'active' : '' }}"aria-current="page"href="{{ route('users.asks', Auth::user()->id) }}">
+                                <a class="nav-link {{ Route::currentRouteNamed('users.asks') ? 'active' : '' }}"
+                                    aria-current="page" href="{{ route('users.asks', Auth::user()->id) }}">
                                     Demandes d'emprunt
                                 </a>
                             </li>
