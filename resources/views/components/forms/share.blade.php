@@ -20,16 +20,16 @@
 <hr>
 
 <div class="mb-3">
-    <label for="imBorrower" class="form-check-label">J'ai emprunté l'objet</label>
     <input class="form-check-input" type="checkbox" id="imBorrower" name="imBorrower" value="active"
         @checked(old('imBorrower', $imBorrower)) data-bs-toggle="collapse"
         data-bs-target="#alertImBorrower, #otherUserLabelBorrower, #otherUserLabelLender" />
+    <label for="imBorrower" class="form-check-label">J'ai emprunté l'objet</label>
 </div>
 
 <div id="alertImBorrower" class="mb-3 alert alert-warning collapse {{ old('imBorrower', $imBorrower) ? 'show' : '' }}"
     role="alert">
     Dans ce mode, l'objet emprunté ne sera pas lié à un utilisateur existant.<br>
-    (Le nom ne peut donc pas commencer par &#64;)
+    (Le nom ne peut donc pas commencer par @)
 </div>
 
 <div class="mb-3">
@@ -42,7 +42,7 @@
         placeholder="Ecrivez pour rechercher... (@ pour un utilisateur inscrit)" required>
     <datalist id="dlOptionsOtherUser">
         @foreach ($users as $user)
-            <option value="&#64;{{ $user->name }}">{{ $user->email }} </option>
+            <option value="{{ '@' . $user->name }}">{{ $user->email }}</option>
         @endforeach
     </datalist>
 </div>
@@ -70,9 +70,9 @@
 <hr>
 
 <div class="mb-3">
-    <label for="terminated" class="form-check-label">L'objet a été retourné </label>
     <input class="form-check-input" type="checkbox" id="terminated" name="terminated" value="active"
         @checked(old('terminated', $share->terminated)) data-bs-toggle="collapse" data-bs-target="#alertTerminated" />
+    <label for="terminated" class="form-check-label">L'objet a été retourné </label>
 </div>
 
 <div id="alertTerminated"

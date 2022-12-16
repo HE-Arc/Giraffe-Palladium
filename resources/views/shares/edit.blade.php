@@ -1,5 +1,3 @@
-{{-- &#64; == @ --}}
-
 @extends('layout.app')
 
 @section('title')

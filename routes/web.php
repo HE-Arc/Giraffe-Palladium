@@ -60,7 +60,7 @@ Route::post('/signup', [AuthController::class, 'store'])->name('auth.signup.stor
 Route::get('/signout', [AuthController::class, 'disconnect'])->name('auth.signout.disconnect');
 
 // ShareController
-Route::get('/shares/{item}/create/', [ShareController::class, 'create'])->name('shares.create');
+Route::get('/shares/create', [ShareController::class, 'create'])->name('shares.create');
 Route::post('/shares', [ShareController::class, 'store'])->name('shares.store');
 Route::get('/shares/{share}/edit', [ShareController::class, 'edit'])->name('shares.edit');
 Route::put('/shares/{share}', [ShareController::class, 'update'])->name('shares.update');

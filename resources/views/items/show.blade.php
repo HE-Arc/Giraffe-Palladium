@@ -11,21 +11,16 @@
             <span style="white-space: pre-wrap">{{ $item->description }}</span>
         </p>
     @endif
-    @php
-        $isAlreadyShared = $shares->count();
-    @endphp
 
     @if ($isMine)
-        @php
-            $autorised = $item->listed ? 'autorisez' : 'refusez';
-            $autorisedColor = $item->listed ? 'text-success' : 'text-danger';
-        @endphp
         <p>
-            Vous
-            <span class='fw-semibold {{ $autorisedColor }}'>{{ $autorised }}</span>
-            cet objet à être disponible dans la liste d'emprunt
+            Cet objet est
+            <span class='fw-semibold {{ $item->listed ? 'text-success' : 'text-danger' }}'>
+                {{ $item->listed ? 'visible' : 'invisible' }}
+            </span>
+            dans la liste des objets empruntables.
         </p>
-        @if ($item->listed && $isAlreadyShared)
+        @if ($item->listed && $shares->count() > 0)
             <div class="alert alert-warning" role="alert">
                 <p>Cet objet est actuellement partagé à quelqu'un.</p>
                 <p class="mb-0">Il n'est donc pas visible pour les autres utilisateurs.</p>
@@ -68,7 +63,7 @@
 
         <h2 class="mt-3">Partages en cours</h2>
 
-        @if ($isAlreadyShared)
+        @if ($shares->count() > 0)
             <div class="table-responsive rounded-2 border border-gray">
                 <table class=" mb-0 table">
                     <thead class="table-light">
@@ -83,7 +78,7 @@
                         @foreach ($shares as $share)
                             @php
                                 $linkedUser = $share->borrower ? $share->borrower : $share->nonuser_borrower;
-                                if ($linkedUser == auth()->user()) {
+                                if ($linkedUser instanceof \App\Models\User && $linkedUser->id == auth()->id()) {
                                     $linkedUser = $share->lender ? $share->lender : $share->nonuser_lender;
                                 }
                             @endphp
@@ -95,9 +90,9 @@
             </div>
         @else
             <p> Cet objet n'est pas partagé pour le moment. </p>
-            <form action="{{ route('shares.create', $item->id) }}" method="get" class="d-inline">
-                <button type="submit" class="btn btn-primary" title="Share">Ajouter un partage manuellement</button>
-            </form>
+            <a class="btn btn-primary" href="{{ route('shares.create', ['itemId' => $item->id]) }}" title="Share">
+                Ajouter un partage manuellement
+            </a>
         @endif
     @else
         <p>
@@ -107,7 +102,7 @@
             </a>
         </p>
 
-        @if ($item->listed && !$isAlreadyShared)
+        @if ($item->listed && $shares->count() == 0)
             @if (!auth()->guest())
                 @if (is_null($myAsk))
                     <form action="{{ route('asks.store') }}" method="post" class="d-inline">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Share;
 use App\Models\Item;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreUpdateShareRequest;
 
 class ShareController extends Controller
@@ -22,23 +23,26 @@ class ShareController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \App\Models\Item  $item The item to be shared
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Item $item)
+    public function create(Request $request)
     {
         $this->authorize('create', Share::class);
 
         $share = new Share();
         $share->since = now();
-        $share->item()->associate($item);
+        $share->item()->associate($request->itemId);
+
+        $items = Item::borrowable(auth()->user())->get();
+        $items->push($share->item);
 
         return view(
             'shares.create',
             [
                 'share' => $share,
                 'users' => User::all()->whereNotIn('id', auth()->id()),
-                'items' => auth()->user()->items()->get(),
+                'items' => $items,
                 'imBorrower' => false,
                 'otherUserName' => "",
             ]
@@ -115,10 +119,13 @@ class ShareController extends Controller
             $otherUserName = "@" . $share->borrower->name;
         }
 
+        $items = Item::borrowable(auth()->user())->get();
+        $items->push($share->item);
+
         return view('shares.edit', [
             'share' => $share,
             'users' => User::all()->whereNotIn('id', auth()->id()),
-            'items' => auth()->user()->items()->get(),
+            'items' => $items,
             'imBorrower' => $imBorrower,
             'otherUserName' => $otherUserName,
         ]);
