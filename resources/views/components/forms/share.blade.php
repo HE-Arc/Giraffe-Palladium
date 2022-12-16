@@ -8,13 +8,11 @@
 
 <div class="mb-3">
     <label for="item" class="form-label">Objet emprunté</label>
-    <select class="form-select" id="item" name="item" required disabled>
-        {{-- disabled because item can't be changed to avoid edges problems --}}
+    <select class="form-select" id="item" name="itemId" required>
         @foreach ($items as $item)
             <option value="{{ $item->id }}" @selected(old('item', $share->item_id) == $item->id)>{{ $item->title }}</option>
         @endforeach
     </select>
-    <input type="hidden" name="itemId" value="{{ old('itemId', $share->item_id) }}">
 </div>
 
 <hr>

@@ -34,8 +34,7 @@ class ShareController extends Controller
         $share->since = now();
         $share->item()->associate($request->itemId);
 
-        $items = Item::borrowable(auth()->user())->get();
-        $items->push($share->item);
+        $items = Item::borrowable(auth()->user())->union(Item::where('id', $share->item_id))->orderBy('title')->get();
 
         return view(
             'shares.create',
@@ -119,8 +118,7 @@ class ShareController extends Controller
             $otherUserName = "@" . $share->borrower->name;
         }
 
-        $items = Item::borrowable(auth()->user())->get();
-        $items->push($share->item);
+        $items = Item::borrowable(auth()->user())->union(Item::where('id', $share->item_id))->orderBy('title')->get();
 
         return view('shares.edit', [
             'share' => $share,
@@ -144,6 +142,7 @@ class ShareController extends Controller
 
         $validated = $request->validated();
 
+        $itemId = $validated['itemId'];
         $imBorrower = $validated['imBorrower'];
         $existingUser = $validated['existingUser'];
         $otherUserName = $validated['otherUserName'];
@@ -161,6 +160,7 @@ class ShareController extends Controller
         }
 
         $share->update([
+            'item_id' => $itemId,
             'lender_id' => $lenderId,
             'nonuser_lender' => $nonuser_lender,
             'borrower_id' => $borrowerId,
