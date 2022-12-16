@@ -4,33 +4,29 @@
     @if ($isMe)
         Mon profil
     @else
-        {{ $user->name }}
+        Utililisateur
     @endif
 @endsection
 
 @section('content')
-    <p><strong>Email</strong> : {{ $user->email }}</p>
-    <p><strong>Description</strong> : <span style="white-space: pre-wrap">{{ $user->description }}</span></p>
-    @if ($isMe)
-        <p><a href="{{ route('users.edit', $user->id) }}">Modifier mon profil</a></p>
-    @endif
-
-    <h3>
+    <h2>
         @if ($isMe)
-            Mes objets
+            {{ $user->name }} ({{ $user->email }})
         @else
-            Objets qu'iel propose
+            {{ $user->name }} (<a class="link-dark" href="mailto:{{ $user->email }}">{{ $user->email }}</a>)
         @endif
-    </h3>
-    <ul>
-        @foreach ($items as $item)
-            <li>
-                <a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a>
-            </li>
-        @endforeach
-    </ul>
+    </h2>
+    <p class="alert alert-light border border-1">
+        @if ($user->description == '')
+            <i class="text-muted">Aucune description</i>
+        @else
+            <span style="white-space: pre-wrap">{{ $user->description }}</span>
+        @endif
+    </p>
     @if ($isMe)
-        <a class="btn btn-primary" href="{{ route('items.create') }}">Ajouter un objet</a>
+        <p>
+            <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Modifier mon profil</a>
+        </p>
     @endif
     @empty($items->all())
         <p>
@@ -40,5 +36,31 @@
                 Cet utilisateur n'a pas encore proposé d'objets.
             @endif
         </p>
+    @else
+        <h3>
+            @if ($isMe)
+                Mes objets
+            @else
+                Objets qu'iel propose
+            @endif
+        </h3>
+        <div class="container">
+            <ul class="row p-0">
+                @foreach ($items as $item)
+                    <li class="col-lg-6 list-unstyled p-0">
+                        <a href="{{ route('items.show', $item->id) }}" class="d-block link-dark
+                            rounded-2 border border-gray bg-light text-decoration-none m-1 p-3">
+                            <p class="text-center m-0"><strong>{{ $item->title }}</strong></p>
+                            <p class="text-center m-0 mt-1">{{ $item->description }}</p>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     @endempty
+    @if ($isMe)
+        <p>
+            <a class="btn btn-primary" href="{{ route('items.create') }}">Ajouter un objet</a>
+        </p>
+    @endif
 @endsection
