@@ -7,9 +7,9 @@
 @section('content')
     <h2>{{ $item->title }}</h2>
     @if ($item->description)
-    <p class="alert alert-light border border-1">
-        <span style="white-space: pre-wrap">{{ $item->description }}</span>
-    </p>
+        <p class="alert alert-light border border-1">
+            <span style="white-space: pre-wrap">{{ $item->description }}</span>
+        </p>
     @endif
     @php
         $isAlreadyShared = $shares->count();
@@ -33,11 +33,36 @@
         @endif
 
         <a class="btn btn-primary bi bi-pencil" href="{{ route('items.edit', $item->id) }}"> Modifier</a>
-        <form action="{{ route('items.destroy', $item->id) }}" method="POST" class="d-inline">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-danger bi bi-trash3" title="Delete"> Supprimer</button>
-        </form>
+
+        <button type="button" class="btn btn-danger bi bi-trash3" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            Supprimer
+        </button>
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border border-danger border-3">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-danger bi bi-exclamation-circle" id="deleteModalLabel">
+                            Confirmation de suppression</h1>
+                        <button type="button" id="modalClose" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Souhaitez-vous réellement supprimer cet objet ?</p>
+                        <p>Si vous le supprimez, toutes les données associées le seront également.</p>
+                        <p class="mb-0 text-danger bi bi-exclamation-square-fill"> Attention, cette action est irréversible.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <form action="{{ route('items.destroy', $item->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" title="Delete">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <hr>
 
@@ -102,4 +127,11 @@
             <button type="button" class="btn btn-secondary disabled">Non disponible à l'emprunt</button>
         @endif
     @endif
+@endsection
+
+@section('js')
+    <script src="{{ asset('js/modal-utils.js') }}"></script>
+    <script>
+        focusInput("deleteModal", "modalClose")
+    </script>
 @endsection
