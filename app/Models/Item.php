@@ -12,7 +12,8 @@ class Item extends Model
     protected $fillable = [
         'owner_id',
         'title',
-        'description'
+        'description',
+        'listed',
     ];
 
     public function owner()

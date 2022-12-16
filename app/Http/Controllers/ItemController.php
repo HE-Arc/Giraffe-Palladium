@@ -45,6 +45,7 @@ class ItemController extends Controller
             'owner_id' => auth()->id(),
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
+            'listed' => isset($validated['listed']),
         ]);
         return redirect()->route('items.show', $item->id);
     }
@@ -59,10 +60,12 @@ class ItemController extends Controller
     {
         $isMine = optional(auth())->id() === $item->owner_id;
         $myAsk = auth()->guest() ? null : $item->asks()->where('borrower_id', auth()->id())->first();
+        $shares = $item->shares()->whereNotIn('terminated', [true])->orderbyRaw("-deadline DESC")->get();
         return view('items.show', [
             'item' => $item,
             'isMine' => $isMine,
             'myAsk' => $myAsk,
+            'shares' => $shares,
         ]);
     }
 
@@ -94,6 +97,7 @@ class ItemController extends Controller
         $item->update([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
+            'listed' => isset($validated['listed']),
         ]);
         return redirect()->route('items.show', $item->id);
     }

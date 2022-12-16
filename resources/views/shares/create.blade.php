@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('title')
-    Modifier un contrat de prêt
+    Créer un contrat de prêt
 @endsection
 
 @section('content')
@@ -15,11 +15,10 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('shares.update', $share->id) }}" method="post" class="col-md-8 col-lg-6 col-xxl-4">
+        <form action="{{ route('shares.store') }}" method="post" class="col-md-8 col-lg-6 col-xxl-4">
             @csrf
-            @method('PUT')
             <x-forms.share :share="$share" :items="$items" :imBorrower="$imBorrower" :otherUserName="$otherUserName" :users="$users" />
-            <button type="submit" class="btn btn-primary">Modifier</button>
+            <button type="submit" class="btn btn-primary">Créer</button>
         </form>
     </div>
 @endsection

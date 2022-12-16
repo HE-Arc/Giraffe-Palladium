@@ -7,7 +7,7 @@
 @section('content')
     @forelse ($items as $item)
         <h2>
-            <a href="{{ route('items.show', $item->id) }}">{{ $item->title }}</a></td>
+            <a href="{{ route('items.show', $item->id) }}" class="link-dark">{{ $item->title }}</a></td>
         </h2>
         <x-asks :showItem="false" :asks="$item->asks" />
     @empty
