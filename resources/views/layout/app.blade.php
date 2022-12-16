@@ -10,11 +10,13 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column h-100">
     <header>
-        <nav class="navbar navbar-expand-lg bg-light">
+        <nav class="navbar navbar-expand-xl bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ route('home') }}">Giraffe Palladium</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -23,11 +25,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteNamed('home') ? 'active' : '' }}"
-                                aria-current="page" href="{{ route('home') }}">Accueil</a>
-                        </li>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center">
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteNamed('users.index') ? 'active' : '' }}"
                                 aria-current="page" href="{{ route('users.index') }}">Utilisateurs
