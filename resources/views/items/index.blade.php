@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="table-responsive rounded-2 border border-gray">
+    <div class="table-responsive rounded-2 border border-gray mb-3">
         <table class="mb-0 table">
             <thead class="table-light">
                 <tr>
@@ -28,7 +28,7 @@
             </tbody>
         </table>
     </div>
-    <div class="d-flex">
+    <div class="d-flex justify-content-center">
         {{ $items->links() }}
     </div>
 @endsection

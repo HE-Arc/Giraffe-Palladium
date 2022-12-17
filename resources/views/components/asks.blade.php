@@ -2,7 +2,7 @@
     $showItem (boolean),
     $asks (App\Models\Ask)
 --}}
-<div class="table-responsive rounded-2 border border-gray">
+<div class="table-responsive rounded-2 border border-gray mb-3">
     <table class="mb-0 table">
         <thead class="table-light">
             <tr>
@@ -10,7 +10,7 @@
                     <th scope="col">Objet</th>
                 @endif
                 <th scope="col">Demandeur</th>
-                <th scope="col"></th> {{-- Acction buttons --}}
+                <th scope="col"></th> {{-- Action buttons --}}
             </tr>
         </thead>
         <tbody>

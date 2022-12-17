@@ -13,7 +13,7 @@
     @empty
         <p>Vous n'avez aucune demande d'emprunt.</p>
     @endforelse
-    <div class="d-flex">
+    <div class="d-flex justify-content-center">
         {{ $items->links() }}
     </div>
 @endsection

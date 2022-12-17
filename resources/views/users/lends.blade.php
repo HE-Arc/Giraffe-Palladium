@@ -5,9 +5,9 @@
 @endsection
 
 @section('content')
-<x-shares :shares="$lends" :borrowView="false" />
+    <x-shares :shares="$lends" :borrowView="false" />
 
-<div class="d-flex">
-    {{ $lends->links() }}
-</div>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $lends->links() }}
+    </div>
 @endsection

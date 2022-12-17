@@ -28,7 +28,7 @@
             @endforeach
         </ul>
     </div>
-    <div class="d-flex">
+    <div class="d-flex justify-content-center">
         {{ $users->links() }}
     </div>
 @endsection
