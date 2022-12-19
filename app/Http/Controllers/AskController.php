@@ -130,7 +130,7 @@ class AskController extends Controller
         // Delete all asks for this item (including the accepted one)
         $item->asks()->delete();
 
-        return redirect()->route('users.lends', $item->owner_id);
+        return redirect()->route('users.asks', $ask->lender()->id);
     }
 
     /**

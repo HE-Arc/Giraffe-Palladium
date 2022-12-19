@@ -170,7 +170,7 @@ class ShareController extends Controller
             'terminated' => $validated['terminated'],
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route('items.show', $itemId);
     }
 
     /**
