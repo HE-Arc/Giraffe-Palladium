@@ -8,7 +8,7 @@
     <h2>{{ $item->title }}</h2>
     @if ($item->description)
         <p class="alert alert-light border border-1">
-            <span style="white-space: pre-wrap">{{ $item->description }}</span>
+            <span class="text-break text-multiline">{{ $item->description }}</span>
         </p>
     @endif
 

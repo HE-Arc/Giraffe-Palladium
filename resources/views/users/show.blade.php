@@ -20,7 +20,7 @@
         @if ($user->description == '')
             <i class="text-muted">Aucune description</i>
         @else
-            <span style="white-space: pre-wrap">{{ $user->description }}</span>
+            <span class="text-break text-multiline">{{ $user->description }}</span>
         @endif
     </p>
     @if ($isMe)
