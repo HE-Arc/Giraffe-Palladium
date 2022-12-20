@@ -47,11 +47,12 @@
         <div class="container">
             <ul class="row p-0">
                 @foreach ($items as $item)
-                    <li class="col-lg-6 list-unstyled p-0">
-                        <a href="{{ route('items.show', $item->id) }}" class="d-block link-dark
-                            rounded-2 border border-gray bg-light text-decoration-none m-1 p-3">
-                            <p class="text-center m-0"><strong>{{ $item->title }}</strong></p>
-                            <p class="text-center m-0 mt-1">{{ $item->description }}</p>
+                    <li class="col-lg-6 list-unstyled p-1">
+                        <a href="{{ route('items.show', $item->id) }}"
+                            class="d-block link-dark h-100
+                            rounded-2 border border-gray bg-light text-decoration-none p-3">
+                            <p class="text-center m-0 text-truncate"><strong>{{ $item->title }}</strong></p>
+                            <p class="text-center m-0 mt-1 text-truncate">{{ $item->description }}</p>
                         </a>
                     </li>
                 @endforeach
