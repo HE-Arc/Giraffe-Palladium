@@ -25,9 +25,10 @@ class StoreAuthRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => 'required',
-            'confirm-password' => 'required|same:password'
+            'confirm-password' => ['required', 'same:password'],
+            'description' => ['nullable', 'string', 'max:255'],
         ];
     }
 
@@ -46,6 +47,8 @@ class StoreAuthRequest extends FormRequest
             'password.required' => 'Mot de passe requis.',
             'confirm-password.required' => 'Confirmation du mot de passe requise.',
             'confirm-password.same' => 'Les mots de passe ne correspondent pas.',
+            'description.nullable' => 'Description invalide.',
+            'description.max' => 'Description trop longue.',
         ];
     }
 }

@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea id="description" class="form-control" name="description">{{ old('description', $user->description) }}</textarea>
+                <textarea id="description" class="form-control" name="description" maxlength="255">{{ old('description', $user->description) }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Modifier mon profil</button>
         </form>

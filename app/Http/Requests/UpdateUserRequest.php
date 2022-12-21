@@ -26,9 +26,9 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
-            'description' => 'nullable',
-            'password' => 'confirmed|nullable'
+            'email' => ['required', 'email'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'confirmed'],
         ];
     }
 
@@ -44,7 +44,8 @@ class UpdateUserRequest extends FormRequest
             'email.required' => 'Adresse email requise.',
             'email.email' => 'Adresse email invalide.',
             'description.nullable' => 'Description invalide.',
-            'password.confirmed' => 'Les mots de passe ne correspondent pas.'
+            'description.max' => 'Description trop longue.',
+            'password.confirmed' => 'Les mots de passe ne correspondent pas.',
         ];
     }
 }
